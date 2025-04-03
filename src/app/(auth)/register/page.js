@@ -36,7 +36,7 @@ const Page = () => {
         <form onSubmit={submitForm}>
             {/* Name */}
             <div>
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">نام</Label>
 
                 <Input
                     id="name"
@@ -53,7 +53,7 @@ const Page = () => {
 
             {/* Email Address */}
             <div className="mt-4">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">ایمیل</Label>
 
                 <Input
                     id="email"
@@ -69,7 +69,7 @@ const Page = () => {
 
             {/* Password */}
             <div className="mt-4">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">پسورد</Label>
 
                 <Input
                     id="password"
@@ -86,9 +86,7 @@ const Page = () => {
 
             {/* Confirm Password */}
             <div className="mt-4">
-                <Label htmlFor="passwordConfirmation">
-                    Confirm Password
-                </Label>
+                <Label htmlFor="passwordConfirmation">تکرار پسورد</Label>
 
                 <Input
                     id="passwordConfirmation"
@@ -107,14 +105,14 @@ const Page = () => {
                 />
             </div>
 
-            <div className="flex items-center justify-end mt-4">
+            <div className="flex items-center justify-start mt-4">
                 <Link
                     href="/login"
                     className="underline text-sm text-gray-600 hover:text-gray-900">
-                    Already registered?
+                    در حال حاضر حساب دارید؟
                 </Link>
 
-                <Button className="ml-4">Register</Button>
+                <Button className="mr-4">ثبت نام</Button>
             </div>
         </form>
     )

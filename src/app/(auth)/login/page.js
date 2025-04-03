@@ -50,7 +50,7 @@ const Login = () => {
             <form onSubmit={submitForm}>
                 {/* Email Address */}
                 <div>
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">ایمیل</Label>
 
                     <Input
                         id="email"
@@ -67,7 +67,7 @@ const Login = () => {
 
                 {/* Password */}
                 <div className="mt-4">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">پسورد</Label>
 
                     <Input
                         id="password"
@@ -79,14 +79,16 @@ const Login = () => {
                         autoComplete="current-password"
                     />
 
-                    <InputError
-                        messages={errors.password}
-                        className="mt-2"
-                    />
+                    <InputError messages={errors.password} className="mt-2" />
+                    <Link
+                        href="/forgot-password"
+                        className="underline text-sm text-gray-600 hover:text-gray-900">
+                        رمز خود را فراموش کرده اید؟
+                    </Link>
                 </div>
 
                 {/* Remember Me */}
-                <div className="block mt-4">
+                <div className="block mt-4 mb-2">
                     <label
                         htmlFor="remember_me"
                         className="inline-flex items-center">
@@ -100,20 +102,18 @@ const Login = () => {
                             }
                         />
 
-                        <span className="ml-2 text-sm text-gray-600">
-                            Remember me
+                        <span className="mr-2 text-sm text-gray-600">
+                            مرا به خاطر بسپر
                         </span>
                     </label>
                 </div>
-
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex flex-col items-start justify-start mt-1">
+                    <Button className="mb-2">ورود</Button>
                     <Link
-                        href="/forgot-password"
+                        href="/register"
                         className="underline text-sm text-gray-600 hover:text-gray-900">
-                        Forgot your password?
+                        رفتن به صفحه ثبت نام
                     </Link>
-
-                    <Button className="ml-3">Login</Button>
                 </div>
             </form>
         </>
