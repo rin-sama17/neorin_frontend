@@ -11,7 +11,6 @@ async function getProduct(id) {
             cache: 'no-store',
         },
     )
-    console.log(res)
     if (!res.ok) {
         throw new Error('خطا در دریافت محصول')
     }
@@ -62,7 +61,7 @@ const page = async ({ params }) => {
 
     return (
         <div className="w-full ">
-            <h2 className="text-xl mt-2 mr-2">ساخت محصول جدید</h2>
+            <h2 className="text-xl mt-2 mr-2">ویرایش محصول</h2>
             <UpdateProductForm
                 categories={categories}
                 cities={cities}

@@ -1,16 +1,15 @@
 'use client'
 import { Form, Formik } from 'formik'
-import React, { useState } from 'react'
 import Label from '@/components/Label'
 import Input from '@/components/Input'
 import InputError from '@/components/InputError'
 import { useAdminRequest } from '@/admin/services'
 import Link from 'next/link'
 import Image from 'next/image'
+import { ImageUploader } from '../../services'
 
 const CreateProductForm = ({ categories, cities }) => {
     const { createProduct, convertToForm } = useAdminRequest()
-    const [message, setMessage] = useState('')
     return (
         <Formik
             initialValues={{
@@ -36,7 +35,6 @@ const CreateProductForm = ({ categories, cities }) => {
                 createProduct({
                     data,
                     setErrors,
-                    setMessage,
                 })
             }}>
             {({ setFieldValue, values }) => (
@@ -68,21 +66,11 @@ const CreateProductForm = ({ categories, cities }) => {
                         <InputError name="description" />
                     </div>
                     <div className="col-span-3">
-                        <Label htmlFor="image">عکس</Label>
-                        <input
-                            type="file"
-                            onChange={event => {
-                                setFieldValue(
-                                    'image',
-                                    event.currentTarget.files[0],
-                                )
-                            }}
+                        <ImageUploader
+                            value={values.image}
                             name="image"
-                            className="w-full rounded-md shadow-sm  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-2 border-gray-300   file:ml-2 file:py-2 file:px-4 file:rounded-s-lg file:border-0 file:text-lg file:font-semibold file:bg-gray-600 file:text-white hover:file:bg-gray-700"
-                            id="image"
+                            setFieldValue={setFieldValue}
                         />
-
-                        <InputError name="image" />
                     </div>
 
                     <div className="col-span-1">
@@ -224,16 +212,11 @@ const CreateProductForm = ({ categories, cities }) => {
                             ساخت محصول
                         </button>
                         <Link
-                            href="/admin/category"
+                            href="/admin/product"
                             className="btn btn-secondary mr-4">
                             انصراف
                         </Link>
                     </div>
-                    {message && (
-                        <div className="w-full py-5 px-3 my-2 rounded-lg bg-green-400 text-green-700">
-                            {message}
-                        </div>
-                    )}
                 </Form>
             )}
         </Formik>

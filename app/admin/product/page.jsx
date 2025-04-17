@@ -26,7 +26,7 @@ const page = async () => {
         console.log(err)
     }
     return (
-        <dev className="w-full">
+        <div className="w-full">
             <div className="p-4">
                 <h1 className="text-xl mb-4">مدیریت محصولات</h1>
                 <Link href="/admin/product/create" className="btn btn-success">
@@ -35,7 +35,7 @@ const page = async () => {
 
                 <ProductList products={products.data} />
             </div>
-        </dev>
+        </div>
     )
 }
 

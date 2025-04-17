@@ -7,6 +7,7 @@ import { useAdminRequest } from '@/admin/services'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ImageUploader } from '../../../services'
+import LinkButton from '../../../../components/LinkButton'
 
 const UpdateProductForm = ({ categories, cities, product }) => {
     const { updateProduct, convertToForm } = useAdminRequest()
@@ -41,6 +42,18 @@ const UpdateProductForm = ({ categories, cities, product }) => {
             {({ setFieldValue, values }) => (
                 <Form className="gap-4 p-3 grid lg:grid-cols-3">
                     <div className="col-span-3">
+                        <div className="mb-2">
+                            <LinkButton
+                                title={
+                                    <>
+                                        <i className="fa fa-photo ml-1"></i>
+                                        رفتن به صفحه مدیریت گالری
+                                    </>
+                                }
+                                href={`/admin/product/gallery/${product.id}`}
+                                className="text-gray-500 text-lg "
+                            />
+                        </div>
                         <Label htmlFor="title">نام *</Label>
                         <Input
                             type="text"
@@ -66,11 +79,14 @@ const UpdateProductForm = ({ categories, cities, product }) => {
 
                         <InputError name="description" />
                     </div>
-                    <ImageUploader
-                        value={values.image}
-                        name="image"
-                        setFieldValue={setFieldValue}
-                    />
+                    <div className="col-span-3">
+                        <ImageUploader
+                            value={values.image}
+                            name="image"
+                            setFieldValue={setFieldValue}
+                        />
+                    </div>
+
                     <div className="col-span-1">
                         <Label htmlFor="price">قیمت</Label>
                         <Input type="text" name="price" />
@@ -209,7 +225,7 @@ const UpdateProductForm = ({ categories, cities, product }) => {
                             بروزرسانی محصول
                         </button>
                         <Link
-                            href="/admin/category"
+                            href="/admin/product"
                             className="btn btn-secondary mr-4">
                             انصراف
                         </Link>
