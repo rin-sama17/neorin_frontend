@@ -6,6 +6,7 @@ const ConfirmAllert = ({ title, helper, onConfirm }) => {
     return (
         <>
             <button
+                type="button"
                 onClick={() => setOpen(true)}
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                 <i className="fa fa-trash"></i>

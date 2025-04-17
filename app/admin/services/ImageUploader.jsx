@@ -2,28 +2,14 @@ import Image from 'next/image'
 import React from 'react'
 import Label from '../../components/Label'
 import InputError from '../../components/InputError'
+import ImagePreview from '../../common/ImagePreview'
 
 const ImageUploader = ({ value, name, setFieldValue }) => {
-    console.log(value)
     return (
-        <div className="col-span-3">
-            {/* {value && (
+        <>
+            {value && (
                 <div className="relative group inline-block rounded border-4 border-gray-500">
-                    {typeof value === 'object' ? (
-                        <img
-                            src={URL.createObjectURL(value)}
-                            alt="preview"
-                            className="mt-2 h-32 object-cover rounded"
-                        />
-                    ) : (
-                        <Image
-                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${value.indexArray.large}`}
-                            width={300}
-                            height={128}
-                            alt="uploaded image"
-                            className="mt-2 rounded"
-                        />
-                    )}
+                    <ImagePreview item={value} />
                     <button
                         type="button"
                         className="absolute top-0 right-0 h-full w-full bg-white/70 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
@@ -35,7 +21,7 @@ const ImageUploader = ({ value, name, setFieldValue }) => {
                         حذف عکس
                     </button>
                 </div>
-            )} */}
+            )}
             <Label htmlFor={name}>عکس</Label>
             <input
                 type="file"
@@ -47,7 +33,7 @@ const ImageUploader = ({ value, name, setFieldValue }) => {
                 id={name}
             />
             <InputError name={name} />
-        </div>
+        </>
     )
 }
 

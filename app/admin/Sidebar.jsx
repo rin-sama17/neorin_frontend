@@ -10,13 +10,10 @@ const sidebarItems = [
         title: 'مدیریت محصول',
         href: '/admin/product',
     },
-    {
-        title: 'مدیریت گالری',
-        href: '/admin/gallery',
-    },
+
     {
         title: 'مدیریت صفحات',
-        href: '/admin/page',
+        href: '/admin/pages',
     },
     {
         title: 'مدیریت صفت دسته بندی',
@@ -37,6 +34,10 @@ const sidebarItems = [
     {
         title: 'مدیریت ادمین',
         href: '/admin/admin',
+    },
+    {
+        title: 'تنظیمات سایت',
+        href: '/admin/setting',
     },
 ]
 const Sidebar = () => {
