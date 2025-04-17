@@ -1,6 +1,5 @@
 'use client'
 import { Form, Formik } from 'formik'
-import React, { useState } from 'react'
 import { useAdminRequest } from '@/admin/services'
 import Label from '@/components/Label'
 import Input from '@/components/Input'
@@ -9,7 +8,6 @@ import Link from 'next/link'
 
 const CreateCategoryForm = ({ category, categories }) => {
     const { updateCategory } = useAdminRequest()
-    const [message, setMessage] = useState('')
 
     return (
         <Formik
@@ -32,7 +30,6 @@ const CreateCategoryForm = ({ category, categories }) => {
                     ...data,
                     categoryId: category.id,
                     setErrors,
-                    setMessage,
                 })
             }}>
             <Form className="gap-4 p-3 grid lg:grid-cols-2">
@@ -111,11 +108,6 @@ const CreateCategoryForm = ({ category, categories }) => {
                         انصراف
                     </Link>
                 </div>
-                {message && (
-                    <div className="w-full py-5 px-3 my-2 rounded-lg bg-green-400 text-green-700">
-                        {message}
-                    </div>
-                )}
             </Form>
         </Formik>
     )

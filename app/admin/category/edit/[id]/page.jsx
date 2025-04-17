@@ -45,7 +45,8 @@ const page = async ({ params }) => {
     const category = await getCategory(id)
 
     return (
-        <div>
+        <div className="w-full ">
+            <h2 className="text-xl mt-2 mr-2">ویرایش دسته بندی</h2>
             <UpdateCategoryForm
                 categories={categories}
                 category={category.data}

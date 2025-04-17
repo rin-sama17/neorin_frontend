@@ -28,7 +28,7 @@ const page = async () => {
         console.log(err)
     }
     return (
-        <dev className="w-full">
+        <div className="w-full">
             <div className="p-4">
                 <h1 className="text-xl mb-4">مدیریت دسته بندی ها</h1>
                 <Link href="/admin/category/create" className="btn btn-success">
@@ -37,7 +37,7 @@ const page = async () => {
 
                 <CategoryList categories={categories} />
             </div>
-        </dev>
+        </div>
     )
 }
 
