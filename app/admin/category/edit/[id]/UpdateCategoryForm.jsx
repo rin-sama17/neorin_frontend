@@ -6,7 +6,7 @@ import Input from '@/components/Input'
 import InputError from '@/components/InputError'
 import Link from 'next/link'
 
-const CreateCategoryForm = ({ category, categories }) => {
+const UpdateCategoryForm = ({ category, categories }) => {
     const { updateCategory } = useAdminRequest()
 
     return (
@@ -113,4 +113,4 @@ const CreateCategoryForm = ({ category, categories }) => {
     )
 }
 
-export default CreateCategoryForm
+export default UpdateCategoryForm

@@ -6,57 +6,50 @@ import Input from '@/components/Input'
 import InputError from '@/components/InputError'
 import Link from 'next/link'
 
-const UpdateAttributeForm = ({ attribute, categories }) => {
-    const { updateAttribute } = useAdminRequest()
+const UpdateCategoryValueForm = ({ categoryValue, attributes }) => {
+    const { updateCategoryValue } = useAdminRequest()
 
     return (
         <Formik
             initialValues={{
-                name: attribute.name,
-                unit: attribute.unit,
-                category_id: String(attribute.category.id),
-                type: attribute.type,
-                status: attribute.status,
+                value: categoryValue.value,
+                type: categoryValue.type,
+                category_attribute_id: String(
+                    categoryValue.categoryAttribute.id,
+                ),
+                status: categoryValue.status,
             }}
             onSubmit={async (data, { setErrors }) => {
-                updateAttribute({
+                updateCategoryValue({
                     ...data,
-                    attributeId: attribute.id,
+                    categoryValueId: categoryValue.id,
                     setErrors,
                 })
             }}>
             <Form className="gap-4 p-3 grid lg:grid-cols-2">
                 <div className="col-span-2">
-                    <Label htmlFor="name">نام *</Label>
-                    <Input type="text" name="name" placeholder="نام نسبت" />
+                    <Label htmlFor="value"> مقدار *</Label>
+                    <Input type="text" name="value" placeholder=" مقدار نسبت" />
                     <p className="text-sm text-gray-500 mr-2">
                         بین 2 تا 120 کاراکتر
                     </p>
-                    <InputError name="name" />
+                    <InputError name="value" />
                 </div>
 
                 <div className="col-span-1">
-                    <Label htmlFor="unit"> واحد *</Label>
-                    <Input type="text" name="unit" placeholder=" واحد نسبت" />
-                    <p className="text-sm text-gray-500 mr-2">برای مثال: متر</p>
-                    <InputError name="unit" />
-                </div>
-                <div className="col-span-1">
-                    <Label htmlFor="category_id">دسته بندی *</Label>
+                    <Label htmlFor="category_attribute_id">نسبت *</Label>
                     <Input
                         type="text"
-                        name="category_id"
+                        name="category_attribute_id"
                         className="pr-9"
                         as="select">
-                        <option value="">---انتخاب کنید---</option>
-
-                        {categories?.data.map(category => (
+                        {attributes?.data.map(category => (
                             <option key={category.id} value={category.id}>
                                 {category.name}
                             </option>
                         ))}
                     </Input>
-                    <InputError name="category_id" />
+                    <InputError name="category_attribute_id" />
                 </div>
                 <div className="col-span-1">
                     <Label htmlFor="type"> نوع *</Label>
@@ -94,4 +87,4 @@ const UpdateAttributeForm = ({ attribute, categories }) => {
     )
 }
 
-export default UpdateAttributeForm
+export default UpdateCategoryValueForm

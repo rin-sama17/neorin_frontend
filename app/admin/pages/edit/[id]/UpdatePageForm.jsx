@@ -6,7 +6,7 @@ import Input from '@/components/Input'
 import InputError from '@/components/InputError'
 import Link from 'next/link'
 
-const CreatePageForm = ({ page }) => {
+const UpdatePageForm = ({ page }) => {
     const { updatePage } = useAdminRequest()
 
     return (
@@ -76,4 +76,4 @@ const CreatePageForm = ({ page }) => {
     )
 }
 
-export default CreatePageForm
+export default UpdatePageForm

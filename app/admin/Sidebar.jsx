@@ -21,7 +21,7 @@ const sidebarItems = [
     },
     {
         title: 'مدیریت مقدار دسته بندی',
-        href: '/admin/atteibute-value',
+        href: '/admin/category-value',
     },
     {
         title: 'مدیریت محل',
