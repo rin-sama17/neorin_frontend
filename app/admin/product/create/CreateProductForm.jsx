@@ -4,13 +4,13 @@ import React, { useState } from 'react'
 import Label from '@/components/Label'
 import Input from '@/components/Input'
 import InputError from '@/components/InputError'
-import { useAdminRequest } from '@/admin/services'
 import Link from 'next/link'
-import Image from 'next/image'
-import { ImageUploader } from '../../services'
+import { useProductRequest } from '@/hooks/admin/useProductRequest'
+import { convertToForm } from '@/utility'
+import ImageUploader from '@/admin/services/ImageUploader'
 
 const CreateProductForm = ({ categories, cities }) => {
-    const { createProduct, convertToForm } = useAdminRequest()
+    const { createProduct } = useProductRequest()
     const [message, setMessage] = useState('')
     return (
         <Formik

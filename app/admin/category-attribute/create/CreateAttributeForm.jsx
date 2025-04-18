@@ -3,11 +3,11 @@ import { Form, Formik } from 'formik'
 import Label from '@/components/Label'
 import Input from '@/components/Input'
 import InputError from '@/components/InputError'
-import { useAdminRequest } from '@/admin/services'
 import Link from 'next/link'
+import { useCategoryAttributeRequest } from '@/hooks/admin/useCategoryAttributeRequest'
 
 const CreateAttributeForm = ({ categories }) => {
-    const { createAttribute } = useAdminRequest()
+    const { createAttribute } = useCategoryAttributeRequest()
     return (
         <Formik
             initialValues={{

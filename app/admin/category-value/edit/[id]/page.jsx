@@ -1,42 +1,6 @@
-import React from 'react'
 import UpdateCategoryValueForm from './UpdateCategoryValueForm'
+import { getAttributes, getCategoryValue } from '@/admin/services'
 
-async function getCategoryValue(id) {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-value/${id}`,
-        {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-            },
-            cache: 'no-store',
-        },
-    )
-
-    if (!res.ok) {
-        throw new Error('خطا در دریافت مقدار')
-    }
-
-    return res.json()
-}
-async function getAttributes() {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-attribute`,
-        {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-            },
-            cache: 'force-cache',
-        },
-    )
-
-    if (!res.ok) {
-        throw new Error('خطا در دریافت نسبت ها')
-    }
-
-    return res.json()
-}
 const page = async ({ params }) => {
     let { id } = await params
 

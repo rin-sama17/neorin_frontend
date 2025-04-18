@@ -1,4 +1,3 @@
-import React from 'react'
 import CreatePageForm from './CreatePageForm'
 
 const page = async () => {

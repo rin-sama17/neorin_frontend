@@ -1,8 +1,6 @@
-import Image from 'next/image'
-import React from 'react'
-import Label from '../../components/Label'
-import InputError from '../../components/InputError'
-import ImagePreview from '../../common/ImagePreview'
+import Label from '@/components/Label'
+import InputError from '@/components/InputError'
+import ImagePreview from '@/common/ImagePreview'
 
 const ImageUploader = ({ value, name, setFieldValue }) => {
     return (

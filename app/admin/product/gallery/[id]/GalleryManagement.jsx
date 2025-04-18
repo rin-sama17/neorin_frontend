@@ -1,10 +1,10 @@
-import React from 'react'
 import Table from '@/common/Table'
-import { converterToJalali, useAdminRequest } from '../../../services'
 import ImagePreview from '@/common/ImagePreview'
+import { useGalleryRequest } from '@/hooks/admin/useGalleryRequest'
+import { converterToJalali } from '@/utility'
 
 const GalleryManagement = ({ value = [], name, setFieldValue }) => {
-    const { deleteProductGallery } = useAdminRequest()
+    const { deleteProductGallery } = useGalleryRequest()
     const handleDelete = (item, index) => {
         const newImages = [...value]
         newImages.splice(index, 1)

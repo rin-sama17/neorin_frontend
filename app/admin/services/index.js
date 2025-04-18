@@ -1,440 +1,181 @@
-import axios from '@/lib/axios'
-import { useRouter } from 'next/navigation'
-import toast from 'react-hot-toast'
+'use server'
 
-export { default as converterToJalali } from './converterToJalali'
-export { default as ImageUploader } from './ImageUploader'
+const options = {
+    method: 'GET',
+    headers: {
+        Accept: 'application/json',
+    },
+}
 
-export const useAdminRequest = () => {
-    const router = useRouter()
+export async function getAttribute(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-attribute/${id}`,
+        {
+            ...options,
+            cache: 'no-store',
+        },
+    )
 
-    const csrf = () => axios.get('/sanctum/csrf-cookie')
-
-    const createProductGallery = async ({ data, setErrors }) => {
-        await csrf()
-
-        axios
-            .post('/api/admin/product/gallery', data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Accept: 'application/json',
-                },
-            })
-            .then(res => {
-                if (res.status === 201) {
-                    toast.success(`گالری محصول با موفقیت ساخته شد`)
-                    router.push('/admin/product')
-                    router.refresh()
-                }
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
-                setErrors(error.response.data.errors)
-            })
+    if (!res.ok) {
+        throw new Error('خطا در دریافت نسبت')
     }
 
-    const deleteProductGallery = async ({ id, setState }) => {
-        await csrf()
-        const deletePromise = axios
-            .delete(`/api/admin/product/gallery/${id}`)
-            .then(res => {
-                if (res.status === 200) {
-                    router.refresh()
-                    setState()
-                    return res.data.message
-                }
+    return res.json()
+}
 
-                throw new Error('مشکلی پیش امده')
-            })
-            .catch(error => {
-                console.log(error)
-                const message =
-                    error.response?.data?.message || 'خطا در انجام عملیات'
-                throw new Error(message)
-            })
+export async function getAttributes() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-attribute`,
+        {
+            ...options,
+            cache: 'force-cache',
+        },
+    )
 
-        toast.promise(deletePromise, {
-            loading: 'در حال حذف...',
-            success: message => message,
-            error: err => err.message,
-        })
-    }
-    const convertToForm = values => {
-        const formData = new FormData()
-
-        Object.keys(values).forEach(key => {
-            if (key !== 'image' && key !== 'images' && values[key] !== null) {
-                formData.append(key, values[key])
-            }
-        })
-
-        if (values.image) {
-            formData.append('image', values.image)
-        }
-        if (values.images) {
-            for (let i = 0; i < values.images.length; i++) {
-                if (values.images[i] instanceof File)
-                    formData.append(`images[${i}]`, values.images[i])
-            }
-        }
-
-        return formData
+    if (!res.ok) {
+        throw new Error('خطا در دریافت نسبت ها')
     }
 
-    const createProduct = async ({ data, setErrors }) => {
-        await csrf()
-        setErrors(null)
+    return res.json()
+}
 
-        axios
-            .post('/api/admin/product/products', data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Accept: 'application/json',
-                },
-            })
-            .then(res => {
-                if (res.status === 201) {
-                    toast.success(`محصول با موفقیت ساخته شد`)
-                    router.push('/admin/product')
-                }
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
+export async function getCategories() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category`,
+        {
+            ...options,
+            cache: 'force-cache',
+        },
+    )
 
-                setErrors(error.response.data.errors)
-            })
+    if (!res.ok) {
+        throw new Error('خطا در دریافت دسته بندی ها')
     }
 
-    const updateProduct = async ({ setErrors, productId, data }) => {
-        await csrf()
-        setErrors(null)
-        data.append('_method', 'PUT')
+    return res.json()
+}
 
-        const updatePromise = axios
-            .post(`/api/admin/product/products/${productId}`, data)
-            .then(res => {
-                if (res.status === 200) {
-                    router.push('/admin/product')
-                    router.refresh()
-                    return
-                }
-                throw new Error()
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
+export async function getCategory(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category/${id}`,
+        {
+            ...options,
+            cache: 'no-store',
+        },
+    )
 
-                setErrors(error.response.data.errors)
-                throw new Error()
-            })
-        toast.promise(updatePromise, {
-            loading: 'در حال بروزرسانی...',
-            success: 'محصول با موفقیت بروزرسانی شد',
-            error: 'خطا در انجام عملیات',
-        })
+    if (!res.ok) {
+        throw new Error('خطا در دریافت دسته بندی')
     }
 
-    const deleteProduct = async ({ productId }) => {
-        await csrf()
-        const deletePromise = axios
-            .delete(`/api/admin/product/products/${productId}`)
-            .then(res => {
-                if (res.status === 200) {
-                    router.refresh()
-                    return res.data.message
-                }
+    return res.json()
+}
 
-                throw new Error('مشکلی پیش امده')
-            })
-            .catch(error => {
-                console.log(error)
-                const message =
-                    error.response?.data?.message || 'خطا در انجام عملیات'
-                throw new Error(message)
-            })
+export async function getCategoryValues() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-value`,
+        {
+            ...options,
+            cache: 'no-store',
+        },
+    )
 
-        toast.promise(deletePromise, {
-            loading: 'در حال حذف...',
-            success: message => message,
-            error: err => err.message,
-        })
-    }
-    const createPage = async ({ data, setErrors }) => {
-        await csrf()
-        setErrors(null)
-
-        axios
-            .post('/api/admin/content/page', data)
-            .then(res => {
-                if (res.status === 201) {
-                    toast.success(`صفحه با موفقیت ساخته شد`)
-                    router.push('/admin/pages')
-                }
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
-            })
+    if (!res.ok) {
+        throw new Error('خطا در دریافت مقدار ها')
     }
 
-    const updatePage = async ({ setErrors, pageId, data }) => {
-        await csrf()
-        setErrors(null)
+    return res.json()
+}
 
-        const updatePromise = axios
-            .put(`/api/admin/content/page/${pageId}`, data)
-            .then(res => {
-                if (res.status === 200) {
-                    router.push('/admin/pages')
-                    router.refresh()
-                    return
-                }
-                throw new Error()
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
+export async function getCategoryValue(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-value/${id}`,
+        {
+            ...options,
+            cache: 'no-store',
+        },
+    )
 
-                setErrors(error.response.data.errors)
-                throw new Error()
-            })
-        toast.promise(updatePromise, {
-            loading: 'در حال بروزرسانی...',
-            success: 'صفحه با موفقیت بروزرسانی شد',
-            error: 'خطا در انجام عملیات',
-        })
+    if (!res.ok) {
+        throw new Error('خطا در دریافت مقدار')
     }
 
-    const deletePage = async ({ pageId }) => {
-        await csrf()
-        const deletePromise = axios
-            .delete(`/api/admin/content/page/${pageId}`)
-            .then(res => {
-                if (res.status === 200) {
-                    router.refresh()
-                    return res.data.message
-                }
+    return res.json()
+}
 
-                throw new Error('مشکلی پیش امده')
-            })
-            .catch(error => {
-                console.log(error)
-                const message =
-                    error.response?.data?.message || 'خطا در انجام عملیات'
-                throw new Error(message)
-            })
+export async function getPages() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/content/page`,
+        {
+            ...options,
+            cache: 'no-store',
+        },
+    )
 
-        toast.promise(deletePromise, {
-            loading: 'در حال حذف...',
-            success: message => message,
-            error: err => err.message,
-        })
+    if (!res.ok) {
+        throw new Error('خطا در دریافت  صفحه ها')
     }
 
-    const createCategory = async ({ setErrors, ...props }) => {
-        await csrf()
-        setErrors(null)
-        axios
-            .post('/api/admin/product/category', props)
-            .then(res => {
-                if (res.status === 201) {
-                    toast.success(`دسته بندی با موفقیت ساخته شد`)
-                    router.push('/admin/category')
-                }
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
-            })
+    return res.json()
+}
+export async function getPage(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/content/page/${id}`,
+        {
+            ...options,
+            cache: 'no-store',
+        },
+    )
+    if (!res.ok) {
+        throw new Error('خطا در دریافت  صفحه')
     }
 
-    const updateCategory = async ({
-        setErrors,
+    return res.json()
+}
 
-        categoryId,
-        ...props
-    }) => {
-        await csrf()
-        setErrors(null)
-        axios
-            .put(`/api/admin/product/category/${categoryId}`, props)
-            .then(res => {
-                if (res.status === 200) {
-                    router.push('/admin/category')
-                    router.refresh()
-                }
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
+export async function getProducts() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/products`,
+        {
+            ...options,
+            cache: 'no-store',
+        },
+    )
 
-                setErrors(error.response.data.errors)
-            })
+    if (!res.ok) {
+        throw new Error('خطا در دریافت محصولات')
     }
 
-    const deleteCategory = async ({ categoryId }) => {
-        await csrf()
-        const deletePromise = axios
-            .delete(`/api/admin/product/category/${categoryId}`)
-            .then(res => {
-                if (res.status === 200) {
-                    router.refresh()
-                    return res.data.message
-                }
-                throw new Error('مشکلی پیش امده')
-            })
-            .catch(error => {
-                const message =
-                    error.response?.data?.message || 'An error occurred'
-                throw new Error(message)
-            })
+    return res.json()
+}
 
-        toast.promise(deletePromise, {
-            loading: 'در حال حذف...',
-            success: message => message,
-            error: err => err.message,
-        })
-    }
-    const createAttribute = async ({ setErrors, ...props }) => {
-        await csrf()
-        setErrors(null)
-        axios
-            .post('/api/admin/product/category-attribute', props)
-            .then(res => {
-                if (res.status === 201) {
-                    toast.success(`نسبت با موفقیت ساخته شد`)
-                    router.push('/admin/category-attribute')
-                }
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
-            })
+export async function getProduct(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/products/${id}`,
+        {
+            ...options,
+            cache: 'no-store',
+        },
+    )
+    if (!res.ok) {
+        throw new Error('خطا در دریافت محصول')
     }
 
-    const updateAttribute = async ({ setErrors, attributeId, ...props }) => {
-        await csrf()
-        setErrors(null)
-        axios
-            .put(`/api/admin/product/category-attribute/${attributeId}`, props)
-            .then(res => {
-                if (res.status === 200) {
-                    router.push('/admin/category-attribute')
-                    router.refresh()
-                }
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
+    return res.json()
+}
 
-                setErrors(error.response.data.errors)
-            })
+export async function getCities() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cities`,
+        {
+            ...options,
+            cache: 'no-store',
+        },
+    )
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت شهر ها')
     }
 
-    const deleteAttribute = async ({ attributeId }) => {
-        await csrf()
-        const deletePromise = axios
-            .delete(`/api/admin/product/category-attribute/${attributeId}`)
-            .then(res => {
-                if (res.status === 200) {
-                    router.refresh()
-                    return res.data.message
-                }
-                throw new Error('مشکلی پیش امده')
-            })
-            .catch(error => {
-                const message =
-                    error.response?.data?.message || 'An error occurred'
-                throw new Error(message)
-            })
-
-        toast.promise(deletePromise, {
-            loading: 'در حال حذف...',
-            success: message => message,
-            error: err => err.message,
-        })
-    }
-
-    const createCategoryValue = async ({ setErrors, ...props }) => {
-        await csrf()
-        setErrors(null)
-        axios
-            .post('/api/admin/product/category-value', props)
-            .then(res => {
-                if (res.status === 201) {
-                    toast.success(`مقدار با موفقیت ساخته شد`)
-                    router.push('/admin/category-value')
-                }
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
-            })
-    }
-
-    const updateCategoryValue = async ({
-        setErrors,
-        categoryValueId,
-        ...props
-    }) => {
-        await csrf()
-        setErrors(null)
-        axios
-            .put(`/api/admin/product/category-value/${categoryValueId}`, props)
-            .then(res => {
-                if (res.status === 200) {
-                    router.push('/admin/category-value')
-                    router.refresh()
-                }
-            })
-            .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
-            })
-    }
-
-    const deleteCategoryValue = async ({ categoryValueId }) => {
-        await csrf()
-        const deletePromise = axios
-            .delete(`/api/admin/product/category-value/${categoryValueId}`)
-            .then(res => {
-                if (res.status === 200) {
-                    router.refresh()
-                    return res.data.message
-                }
-                throw new Error('مشکلی پیش امده')
-            })
-            .catch(error => {
-                const message =
-                    error.response?.data?.message || 'An error occurred'
-                throw new Error(message)
-            })
-
-        toast.promise(deletePromise, {
-            loading: 'در حال حذف...',
-            success: message => message,
-            error: err => err.message,
-        })
-    }
-    return {
-        createCategory,
-        updateCategory,
-        deleteCategory,
-        createAttribute,
-        updateAttribute,
-        deleteAttribute,
-        createCategoryValue,
-        updateCategoryValue,
-        deleteCategoryValue,
-        createProduct,
-        updateProduct,
-        deleteProduct,
-        convertToForm,
-        createProductGallery,
-        deleteProductGallery,
-        createPage,
-        updatePage,
-        deletePage,
-    }
+    return res.json()
 }

@@ -1,11 +1,12 @@
 'use client'
-import { converterToJalali, useAdminRequest } from '../services'
 import Link from 'next/link'
-import ConfirmAllert from '../../components/ConfirmAllert'
-import Table from '../../common/Table'
+import ConfirmAllert from '@/components/ConfirmAllert'
+import Table from '@/common/Table'
+import { usePageRequest } from '@/hooks/admin/usePageRequest'
+import { converterToJalali } from '@/utility'
 
 const PageList = ({ pages }) => {
-    const { deletePage } = useAdminRequest()
+    const { deletePage } = usePageRequest()
 
     const handleDelete = async pageId => {
         deletePage({ pageId })

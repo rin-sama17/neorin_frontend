@@ -1,22 +1,5 @@
-import React from 'react'
 import UpdatePageForm from './UpdatePageForm'
-async function getPage(id) {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/content/page/${id}`,
-        {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-            },
-            cache: 'no-store',
-        },
-    )
-    if (!res.ok) {
-        throw new Error('خطا در دریافت  صفحه')
-    }
-
-    return res.json()
-}
+import { getPage } from '@/admin/services'
 
 const page = async ({ params }) => {
     let { id } = await params

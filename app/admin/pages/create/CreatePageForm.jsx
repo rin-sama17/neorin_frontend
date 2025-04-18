@@ -1,14 +1,13 @@
 'use client'
 import { Form, Formik } from 'formik'
-import React, { useState } from 'react'
 import Label from '@/components/Label'
 import Input from '@/components/Input'
 import InputError from '@/components/InputError'
-import { useAdminRequest } from '@/admin/services'
 import Link from 'next/link'
+import { usePageRequest } from '@/hooks/admin/usePageRequest'
 
 const CreatePageForm = () => {
-    const { createPage } = useAdminRequest()
+    const { createPage } = usePageRequest()
     return (
         <Formik
             initialValues={{

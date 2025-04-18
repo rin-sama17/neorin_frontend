@@ -1,13 +1,13 @@
 'use client'
 import { Form, Formik } from 'formik'
-import { useAdminRequest } from '@/admin/services'
 import Label from '@/components/Label'
 import Input from '@/components/Input'
 import InputError from '@/components/InputError'
 import Link from 'next/link'
+import { useCategoryAttributeRequest } from '@/hooks/admin/useCategoryAttributeRequest'
 
 const UpdateAttributeForm = ({ attribute, categories }) => {
-    const { updateAttribute } = useAdminRequest()
+    const { updateAttribute } = useCategoryAttributeRequest()
 
     return (
         <Formik

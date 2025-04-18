@@ -1,8 +1,8 @@
 'use client'
 
-import Input from '../../components/Input'
-import InputError from '../../components/InputError'
-import Label from '../../components/Label'
+import Input from '@/components/Input'
+import InputError from '@/components/InputError'
+import Label from '@/components/Label'
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 import AuthSessionStatus from '../AuthSessionStatus'

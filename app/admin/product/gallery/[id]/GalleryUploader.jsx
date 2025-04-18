@@ -1,13 +1,14 @@
 'use client'
 import { Form, Formik } from 'formik'
-import { useAdminRequest } from '@/admin/services'
 import Link from 'next/link'
-import Label from '../../../../components/Label'
-import InputError from '../../../../components/InputError'
+import Label from '@/components/Label'
+import InputError from '@/components/InputError'
 import GalleryManagement from './GalleryManagement'
+import { convertToForm } from '@/utility'
+import { useGalleryRequest } from '@/hooks/admin/useGalleryRequest'
 
 const GalleryUploader = ({ product }) => {
-    const { createProductGallery, convertToForm } = useAdminRequest()
+    const { createProductGallery } = useGalleryRequest()
     return (
         <Formik
             initialValues={{

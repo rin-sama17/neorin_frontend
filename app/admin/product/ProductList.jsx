@@ -1,11 +1,12 @@
 'use client'
-import Table from '../../common/Table'
-import ConfirmAllert from '../../components/ConfirmAllert'
-import { converterToJalali, useAdminRequest } from '../services'
+import { useProductRequest } from '@/hooks/admin/useProductRequest'
+import Table from '@/common/Table'
+import ConfirmAllert from '@/components/ConfirmAllert'
 import Link from 'next/link'
+import { converterToJalali } from '@/utility'
 
 const ProductList = ({ products }) => {
-    const { deleteProduct } = useAdminRequest()
+    const { deleteProduct } = useProductRequest()
 
     const getStatus = status => {
         if (status === 0) return 'غیرفعال'

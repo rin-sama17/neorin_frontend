@@ -1,11 +1,12 @@
 'use client'
-import { converterToJalali, useAdminRequest } from '../services'
 import Link from 'next/link'
-import ConfirmAllert from '../../components/ConfirmAllert'
-import Table from '../../common/Table'
+import ConfirmAllert from '@/components/ConfirmAllert'
+import Table from '@/common/Table'
+import { useCategoryRequest } from '@/hooks/admin/useCategoryRequest'
+import { converterToJalali } from '@/utility'
 
 const CategoryList = ({ categories }) => {
-    const { deleteCategory } = useAdminRequest()
+    const { deleteCategory } = useCategoryRequest()
 
     const getParentName = parentId => {
         const parent = categories.data.find(cat => cat.id === parentId)

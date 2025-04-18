@@ -1,11 +1,12 @@
 'use client'
-import { converterToJalali, useAdminRequest } from '../services'
 import Link from 'next/link'
-import ConfirmAllert from '../../components/ConfirmAllert'
-import Table from '../../common/Table'
+import ConfirmAllert from '@/components/ConfirmAllert'
+import Table from '@/common/Table'
+import { useCategoryAttributeRequest } from '@/hooks/admin/useCategoryAttributeRequest'
+import { converterToJalali } from '@/utility'
 
 const AttributeList = ({ attributes }) => {
-    const { deleteAttribute } = useAdminRequest()
+    const { deleteAttribute } = useCategoryAttributeRequest()
 
     const handleDelete = async attributeId => {
         deleteAttribute({ attributeId })

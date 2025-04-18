@@ -1,31 +1,9 @@
-import React from 'react'
 import PageList from './PageList'
 import Link from 'next/link'
+import { getPages } from '@/admin/services'
 
 const page = async () => {
-    let pages
-    try {
-        const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/content/page`,
-            {
-                headers: {
-                    Accept: 'application/json',
-                },
-                cache: 'no-store',
-            },
-        )
-
-        if (!res.ok) {
-            throw new Error('خطا در دریافت  صفحه ها')
-        }
-        pages = await res.json()
-
-        if (!pages.status) {
-            throw new Error('خطا در دریافت  صفحه ها')
-        }
-    } catch (err) {
-        console.log(err)
-    }
+    const pages = await getPages()
     return (
         <div className="w-full">
             <div className="p-4">

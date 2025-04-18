@@ -1,23 +1,6 @@
-import React from 'react'
 import GalleryUploader from './GalleryUploader'
-import LinkButton from '../../../../components/LinkButton'
-async function getProduct(id) {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/products/${id}`,
-        {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-            },
-            cache: 'no-store',
-        },
-    )
-    if (!res.ok) {
-        throw new Error('خطا در دریافت محصول')
-    }
-
-    return res.json()
-}
+import LinkButton from '@/components/LinkButton'
+import { getProduct } from '@/admin/services'
 
 const page = async ({ params }) => {
     const { id } = params

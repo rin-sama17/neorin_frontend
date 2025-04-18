@@ -1,16 +1,16 @@
 'use client'
-import { converterToJalali, useAdminRequest } from '../services'
 import Link from 'next/link'
-import ConfirmAllert from '../../components/ConfirmAllert'
-import Table from '../../common/Table'
+import ConfirmAllert from '@/components/ConfirmAllert'
+import Table from '@/common/Table'
+import { useCategoryValueRequest } from '@/hooks/admin/useCategoryValueRequest'
+import { converterToJalali } from '@/utility'
 
 const CategoryValueList = ({ categoryValues }) => {
-    const { deleteCategoryValue } = useAdminRequest()
+    const { deleteCategoryValue } = useCategoryValueRequest()
 
     const handleDelete = async categoryValueId => {
         deleteCategoryValue({ categoryValueId })
     }
-    console.log(categoryValues)
     return (
         <Table
             headers={[

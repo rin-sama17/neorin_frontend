@@ -3,14 +3,14 @@ import { Form, Formik } from 'formik'
 import Label from '@/components/Label'
 import Input from '@/components/Input'
 import InputError from '@/components/InputError'
-import { useAdminRequest } from '@/admin/services'
 import Link from 'next/link'
-import Image from 'next/image'
-import { ImageUploader } from '../../../services'
-import LinkButton from '../../../../components/LinkButton'
+import LinkButton from '@/components/LinkButton'
+import { useProductRequest } from '@/hooks/admin/useProductRequest'
+import { convertToForm } from '@/utility'
+import ImageUploader from '@/admin/services/ImageUploader'
 
 const UpdateProductForm = ({ categories, cities, product }) => {
-    const { updateProduct, convertToForm } = useAdminRequest()
+    const { updateProduct } = useProductRequest()
     return (
         <Formik
             initialValues={{

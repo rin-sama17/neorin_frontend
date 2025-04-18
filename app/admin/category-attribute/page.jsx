@@ -1,31 +1,10 @@
-import React from 'react'
 import AttributeList from './AttributeList'
 import Link from 'next/link'
+import { getAttributes } from '@/admin/services'
 
 const page = async () => {
-    let attributes
-    try {
-        const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-attribute`,
-            {
-                headers: {
-                    Accept: 'application/json',
-                },
-                cache: 'no-store',
-            },
-        )
+    const attributes = await getAttributes()
 
-        if (!res.ok) {
-            throw new Error('خطا در دریافت نسبت ها')
-        }
-        attributes = await res.json()
-
-        if (!attributes.status) {
-            throw new Error('خطا در دریافت نسبت ها')
-        }
-    } catch (err) {
-        console.log(err)
-    }
     return (
         <div className="w-full">
             <div className="p-4">
