@@ -1,5 +1,6 @@
 'use client'
 import { Form, Formik } from 'formik'
+import React, { useState } from 'react'
 import Label from '@/components/Label'
 import Input from '@/components/Input'
 import InputError from '@/components/InputError'
@@ -10,6 +11,7 @@ import { ImageUploader } from '../../services'
 
 const CreateProductForm = ({ categories, cities }) => {
     const { createProduct, convertToForm } = useAdminRequest()
+    const [message, setMessage] = useState('')
     return (
         <Formik
             initialValues={{
@@ -35,6 +37,7 @@ const CreateProductForm = ({ categories, cities }) => {
                 createProduct({
                     data,
                     setErrors,
+                    setMessage,
                 })
             }}>
             {({ setFieldValue, values }) => (
@@ -217,6 +220,11 @@ const CreateProductForm = ({ categories, cities }) => {
                             انصراف
                         </Link>
                     </div>
+                    {message && (
+                        <div className="w-full py-5 px-3 my-2 rounded-lg bg-green-400 text-green-700">
+                            {message}
+                        </div>
+                    )}
                 </Form>
             )}
         </Formik>

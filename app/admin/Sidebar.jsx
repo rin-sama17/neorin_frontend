@@ -16,8 +16,8 @@ const sidebarItems = [
         href: '/admin/pages',
     },
     {
-        title: 'مدیریت صفت دسته بندی',
-        href: '/admin/attribute',
+        title: 'مدیریت نسبت دسته بندی',
+        href: '/admin/category-attribute',
     },
     {
         title: 'مدیریت مقدار دسته بندی',
