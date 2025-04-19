@@ -32,19 +32,27 @@ export const useCategoryValueRequest = () => {
     }) => {
         await csrf()
         setErrors(null)
-        axios
+        const updatePromise = axios
             .put(`/api/admin/product/category-value/${categoryValueId}`, props)
             .then(res => {
                 if (res.status === 200) {
                     router.push('/admin/category-value')
                     router.refresh()
+                    return
                 }
+                throw new Error()
             })
             .catch(error => {
                 if (error.response.status !== 422) throw error
 
                 setErrors(error.response.data.errors)
+                throw new Error()
             })
+        toast.promise(updatePromise, {
+            loading: 'در حال بروزرسانی...',
+            success: 'مفدار با موفقیت بروزرسانی شد',
+            error: 'خطا در انجام عملیات',
+        })
     }
 
     const deleteCategoryValue = async ({ categoryValueId }) => {

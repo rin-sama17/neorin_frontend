@@ -1,4 +1,4 @@
-export function convertToForm(values) {
+export default function convertToForm(values) {
     const formData = new FormData()
 
     Object.keys(values).forEach(key => {

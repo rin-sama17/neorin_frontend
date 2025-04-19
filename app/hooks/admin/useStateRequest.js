@@ -2,20 +2,20 @@ import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
-export const useCategoryAttributeRequest = () => {
+export const useStateRequest = () => {
     const router = useRouter()
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
-    const createAttribute = async ({ setErrors, ...props }) => {
+    const createState = async ({ setErrors, ...props }) => {
         await csrf()
         setErrors(null)
         axios
-            .post('/api/admin/product/category-attribute', props)
+            .post('/api/admin/product/state', props)
             .then(res => {
                 if (res.status === 201) {
-                    toast.success(`نسبت با موفقیت ساخته شد`)
-                    router.push('/admin/category-attribute')
+                    toast.success(`محل با موفقیت ساخته شد`)
+                    router.push('/admin/state')
                 }
             })
             .catch(error => {
@@ -25,14 +25,14 @@ export const useCategoryAttributeRequest = () => {
             })
     }
 
-    const updateAttribute = async ({ setErrors, attributeId, ...props }) => {
+    const updateState = async ({ setErrors, stateId, ...props }) => {
         await csrf()
         setErrors(null)
         const updatePromise = axios
-            .put(`/api/admin/product/category-attribute/${attributeId}`, props)
+            .put(`/api/admin/product/state/${stateId}`, props)
             .then(res => {
                 if (res.status === 200) {
-                    router.push('/admin/category-attribute')
+                    router.push('/admin/state')
                     router.refresh()
                     return
                 }
@@ -46,15 +46,15 @@ export const useCategoryAttributeRequest = () => {
             })
         toast.promise(updatePromise, {
             loading: 'در حال بروزرسانی...',
-            success: 'نسبت با موفقیت بروزرسانی شد',
+            success: 'محل با موفقیت بروزرسانی شد',
             error: 'خطا در انجام عملیات',
         })
     }
 
-    const deleteAttribute = async ({ attributeId }) => {
+    const deleteState = async ({ stateId }) => {
         await csrf()
         const deletePromise = axios
-            .delete(`/api/admin/product/category-attribute/${attributeId}`)
+            .delete(`/api/admin/product/state/${stateId}`)
             .then(res => {
                 if (res.status === 200) {
                     router.refresh()
@@ -74,9 +74,10 @@ export const useCategoryAttributeRequest = () => {
             error: err => err.message,
         })
     }
+
     return {
-        createAttribute,
-        updateAttribute,
-        deleteAttribute,
+        createState,
+        updateState,
+        deleteState,
     }
 }

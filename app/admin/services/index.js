@@ -5,15 +5,39 @@ const options = {
     headers: {
         Accept: 'application/json',
     },
+    cache: 'no-store',
+}
+
+export async function getState(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/state/${id}`,
+        options,
+    )
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت محل')
+    }
+
+    return res.json()
+}
+
+export async function getStates() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/state`,
+        options,
+    )
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت محل ها')
+    }
+
+    return res.json()
 }
 
 export async function getAttribute(id) {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-attribute/${id}`,
-        {
-            ...options,
-            cache: 'no-store',
-        },
+        options,
     )
 
     if (!res.ok) {
@@ -26,10 +50,7 @@ export async function getAttribute(id) {
 export async function getAttributes() {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-attribute`,
-        {
-            ...options,
-            cache: 'force-cache',
-        },
+        options,
     )
 
     if (!res.ok) {
@@ -42,10 +63,7 @@ export async function getAttributes() {
 export async function getCategories() {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category`,
-        {
-            ...options,
-            cache: 'force-cache',
-        },
+        options,
     )
 
     if (!res.ok) {
@@ -58,10 +76,7 @@ export async function getCategories() {
 export async function getCategory(id) {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category/${id}`,
-        {
-            ...options,
-            cache: 'no-store',
-        },
+        options,
     )
 
     if (!res.ok) {
@@ -74,10 +89,7 @@ export async function getCategory(id) {
 export async function getCategoryValues() {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-value`,
-        {
-            ...options,
-            cache: 'no-store',
-        },
+        options,
     )
 
     if (!res.ok) {
@@ -90,10 +102,7 @@ export async function getCategoryValues() {
 export async function getCategoryValue(id) {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-value/${id}`,
-        {
-            ...options,
-            cache: 'no-store',
-        },
+        options,
     )
 
     if (!res.ok) {
@@ -106,10 +115,7 @@ export async function getCategoryValue(id) {
 export async function getPages() {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/content/page`,
-        {
-            ...options,
-            cache: 'no-store',
-        },
+        options,
     )
 
     if (!res.ok) {
@@ -121,10 +127,7 @@ export async function getPages() {
 export async function getPage(id) {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/content/page/${id}`,
-        {
-            ...options,
-            cache: 'no-store',
-        },
+        options,
     )
     if (!res.ok) {
         throw new Error('خطا در دریافت  صفحه')
@@ -136,10 +139,7 @@ export async function getPage(id) {
 export async function getProducts() {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/products`,
-        {
-            ...options,
-            cache: 'no-store',
-        },
+        options,
     )
 
     if (!res.ok) {
@@ -152,10 +152,7 @@ export async function getProducts() {
 export async function getProduct(id) {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/products/${id}`,
-        {
-            ...options,
-            cache: 'no-store',
-        },
+        options,
     )
     if (!res.ok) {
         throw new Error('خطا در دریافت محصول')
@@ -167,10 +164,7 @@ export async function getProduct(id) {
 export async function getCities() {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cities`,
-        {
-            ...options,
-            cache: 'no-store',
-        },
+        options,
     )
 
     if (!res.ok) {

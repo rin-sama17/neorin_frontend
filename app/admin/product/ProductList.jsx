@@ -68,7 +68,7 @@ const ProductList = ({ products }) => {
                         </Link>
                         <ConfirmAllert
                             title="حذف محصول"
-                            helper={`ایا از حذف محصول ${product.name} مطمعن هستید`}
+                            helper={`ایا از حذف محصول ${product.title} مطمعن هستید`}
                             onConfirm={() =>
                                 deleteProduct({ productId: product.id })
                             }
