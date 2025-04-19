@@ -5,7 +5,7 @@ import Label from '@/components/Label'
 import InputError from '@/components/InputError'
 import GalleryManagement from './GalleryManagement'
 import { convertToForm } from '@/utility'
-import { useGalleryRequest } from '@/hooks/admin/useGalleryRequest'
+import { useGalleryRequest } from '@/hooks/panel/useGalleryRequest'
 
 const GalleryUploader = ({ product }) => {
     const { createGallery } = useGalleryRequest()
@@ -19,6 +19,7 @@ const GalleryUploader = ({ product }) => {
                 const data = convertToForm(values)
                 createGallery({
                     data,
+                    productId: product.id,
                     setErrors,
                 })
             }}>
@@ -48,7 +49,7 @@ const GalleryUploader = ({ product }) => {
                             ثبت تغییرات
                         </button>
                         <Link
-                            href="/admin/product"
+                            href="/panel/product"
                             className="btn btn-secondary mr-4">
                             انصراف
                         </Link>

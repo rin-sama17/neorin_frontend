@@ -8,6 +8,56 @@ const options = {
     cache: 'no-store',
 }
 
+export async function getUser(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/users/user/${id}`,
+        options,
+    )
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت کاربر')
+    }
+
+    return res.json()
+}
+
+export async function getUsers() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/users/user`,
+        options,
+    )
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت کاربر ها')
+    }
+
+    return res.json()
+}
+
+export async function getSliders() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/content/slider`,
+        options,
+    )
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت  اسلایدر ها')
+    }
+
+    return res.json()
+}
+export async function getSlider(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/content/slider/${id}`,
+        options,
+    )
+    if (!res.ok) {
+        throw new Error('خطا در دریافت  اسلایدر')
+    }
+
+    return res.json()
+}
+
 export async function getState(id) {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/state/${id}`,

@@ -2,12 +2,12 @@ import Label from '@/components/Label'
 import InputError from '@/components/InputError'
 import ImagePreview from '@/common/ImagePreview'
 
-const ImageUploader = ({ value, name, setFieldValue, isLink }) => {
+const ImageUploader = ({ value, name, setFieldValue }) => {
     return (
         <>
             {value && (
                 <div className="relative group inline-block rounded border-4 border-gray-500">
-                    <ImagePreview item={value} isLink={isLink} />
+                    <ImagePreview item={value} />
                     <button
                         type="button"
                         className="absolute top-0 right-0 h-full w-full bg-white/70 opacity-0 group-hover:opacity-100 transition-opacity duration-200"

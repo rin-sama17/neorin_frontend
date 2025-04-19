@@ -2,16 +2,17 @@ import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
-export const useGalleryRequest = () => {
+export const useProductRequest = () => {
     const router = useRouter()
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
-    const createGallery = async ({ data, setErrors }) => {
+    const createProduct = async ({ data, setErrors }) => {
         await csrf()
+        setErrors(null)
 
         axios
-            .post('/api/admin/gallery', data, {
+            .post('/api/panel/product/products', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Accept: 'application/json',
@@ -19,25 +20,52 @@ export const useGalleryRequest = () => {
             })
             .then(res => {
                 if (res.status === 201) {
-                    toast.success(`گالری محصول با موفقیت ساخته شد`)
-                    router.push('/admin/product')
-                    router.refresh()
+                    toast.success(`محصول با موفقیت ساخته شد`)
+                    router.push('/panel/product')
                 }
             })
             .catch(error => {
                 if (error.response.status !== 422) throw error
+
                 setErrors(error.response.data.errors)
             })
     }
 
-    const deleteGallery = async ({ id, setState }) => {
+    const updateProduct = async ({ setErrors, productId, data }) => {
+        await csrf()
+        setErrors(null)
+        data.append('_method', 'PUT')
+
+        const updatePromise = axios
+            .post(`/api/panel/product/products/${productId}`, data)
+            .then(res => {
+                if (res.status === 200) {
+                    router.push('/panel/product')
+                    router.refresh()
+                    return
+                }
+                throw new Error()
+            })
+            .catch(error => {
+                if (error.response.status !== 422) throw error
+
+                setErrors(error.response.data.errors)
+                throw new Error()
+            })
+        toast.promise(updatePromise, {
+            loading: 'در حال بروزرسانی...',
+            success: 'محصول با موفقیت بروزرسانی شد',
+            error: 'خطا در انجام عملیات',
+        })
+    }
+
+    const deleteProduct = async ({ productId }) => {
         await csrf()
         const deletePromise = axios
-            .delete(`/api/admin/gallery/${id}`)
+            .delete(`/api/panel/product/products/${productId}`)
             .then(res => {
                 if (res.status === 200) {
                     router.refresh()
-                    setState()
                     return res.data.message
                 }
 
@@ -58,7 +86,8 @@ export const useGalleryRequest = () => {
     }
 
     return {
-        createGallery,
-        deleteGallery,
+        createProduct,
+        updateProduct,
+        deleteProduct,
     }
 }

@@ -4,35 +4,34 @@ import Label from '@/components/Label'
 import Input from '@/components/Input'
 import InputError from '@/components/InputError'
 import Link from 'next/link'
-import { useProductRequest } from '@/hooks/admin/useProductRequest'
+import LinkButton from '@/components/LinkButton'
 import { convertToForm } from '@/utility'
-import ImageUploader from '@/admin/services/ImageUploader'
+import { useProductRequest } from '@/hooks/panel/useProductRequest'
+import ImageUploader from '@/panel/services/ImageUploader'
 
-const CreateProductForm = ({ categories, cities }) => {
-    const { createProduct } = useProductRequest()
+const UpdateProductForm = ({ categories, cities, product }) => {
+    const { updateProduct } = useProductRequest()
     return (
         <Formik
             initialValues={{
-                title: '',
-                description: '',
-                product_type: '',
-                product_status: 'در حد نو',
-                category_id: '',
-                city_id: '',
-                contact: '',
-                is_special: 0,
-                is_ladder: 0,
-                image: '',
-                price: '',
-                tags: '',
-                lat: '',
-                lng: '',
-                willing_to_trade: 0,
-                status: 1,
+                title: product.title,
+                description: product.description,
+                product_type: product.product_type,
+                product_status: product.product_status,
+                category_id: product.category.id,
+                city_id: product.city.id,
+                contact: product.contact,
+                image: product.image,
+                tags: product.tags,
+                price: product.price,
+                lat: product.lat,
+                lng: product.lng,
+                willing_to_trade: product.willing_to_trade,
             }}
             onSubmit={async (values, { setErrors }) => {
                 const data = convertToForm(values)
-                createProduct({
+                updateProduct({
+                    productId: product.id,
                     data,
                     setErrors,
                 })
@@ -40,6 +39,18 @@ const CreateProductForm = ({ categories, cities }) => {
             {({ setFieldValue, values }) => (
                 <Form className="gap-4 p-3 grid lg:grid-cols-3">
                     <div className="col-span-3">
+                        <div className="mb-2">
+                            <LinkButton
+                                title={
+                                    <>
+                                        <i className="fa fa-photo ml-1"></i>
+                                        رفتن به صفحه مدیریت گالری
+                                    </>
+                                }
+                                href={`/panel/product/gallery/${product.id}`}
+                                className="text-gray-500 text-lg "
+                            />
+                        </div>
                         <Label htmlFor="title">نام *</Label>
                         <Input
                             type="text"
@@ -76,8 +87,7 @@ const CreateProductForm = ({ categories, cities }) => {
                     <div className="col-span-1">
                         <Label htmlFor="price">قیمت</Label>
                         <Input type="text" name="price" />
-
-                        <InputError name="price" />
+                        <InputError name="price" />s
                     </div>
                     <div className="col-span-1">
                         <Label htmlFor="product_type">نوع محصول</Label>
@@ -112,42 +122,6 @@ const CreateProductForm = ({ categories, cities }) => {
                         </p>
 
                         <InputError name="tags" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="status">وضعیت</Label>
-                        <Input
-                            type="text"
-                            name="status"
-                            as="select"
-                            className="pr-9">
-                            <option value={1}>فعال</option>
-                            <option value={0}>غیرفعال</option>
-                        </Input>
-                        <InputError name="status" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="is_special">ویژه</Label>
-                        <Input
-                            type="text"
-                            name="is_special"
-                            as="select"
-                            className="pr-9">
-                            <option value={0}>غیرفعال</option>
-                            <option value={1}>فعال</option>
-                        </Input>
-                        <InputError name="is_special" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="is_ladder">نردبان</Label>
-                        <Input
-                            type="text"
-                            name="is_ladder"
-                            as="select"
-                            className="pr-9">
-                            <option value={0}>غیرفعال</option>
-                            <option value={1}>فعال</option>
-                        </Input>
-                        <InputError name="is_ladder" />
                     </div>
 
                     <div className="col-span-3">
@@ -209,10 +183,10 @@ const CreateProductForm = ({ categories, cities }) => {
                     </div>
                     <div className="flex">
                         <button className="btn btn-primary mr-4" type="submit">
-                            ساخت محصول
+                            بروزرسانی محصول
                         </button>
                         <Link
-                            href="/admin/product"
+                            href="/panel/product"
                             className="btn btn-secondary mr-4">
                             انصراف
                         </Link>
@@ -223,4 +197,4 @@ const CreateProductForm = ({ categories, cities }) => {
     )
 }
 
-export default CreateProductForm
+export default UpdateProductForm

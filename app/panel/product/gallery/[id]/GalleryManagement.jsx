@@ -1,7 +1,7 @@
 import Table from '@/common/Table'
 import ImagePreview from '@/common/ImagePreview'
-import { useGalleryRequest } from '@/hooks/admin/useGalleryRequest'
 import { converterToJalali } from '@/utility'
+import { useGalleryRequest } from '@/hooks/panel/useGalleryRequest'
 
 const GalleryManagement = ({ value = [], name, setFieldValue }) => {
     const { deleteGallery } = useGalleryRequest()

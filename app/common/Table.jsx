@@ -1,9 +1,9 @@
 const Table = ({ headers, children }) => {
     if (!children) {
         return (
-            <dev className="bg-gray-50 border px-4 py-2 flex justify-center">
+            <div className="bg-gray-50 border px-4 py-2 flex justify-center">
                 <h5 className="text-lg">داده ای یافت نشد</h5>
-            </dev>
+            </div>
         )
     }
     return (

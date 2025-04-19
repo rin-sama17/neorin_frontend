@@ -7,11 +7,11 @@ export const useGalleryRequest = () => {
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
-    const createGallery = async ({ data, setErrors }) => {
+    const createGallery = async ({ data, productId, setErrors }) => {
         await csrf()
 
         axios
-            .post('/api/admin/gallery', data, {
+            .post(`/api/panel/gallery/store/${productId}`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Accept: 'application/json',
@@ -20,7 +20,7 @@ export const useGalleryRequest = () => {
             .then(res => {
                 if (res.status === 201) {
                     toast.success(`گالری محصول با موفقیت ساخته شد`)
-                    router.push('/admin/product')
+                    router.push('/panel/product')
                     router.refresh()
                 }
             })
@@ -33,7 +33,7 @@ export const useGalleryRequest = () => {
     const deleteGallery = async ({ id, setState }) => {
         await csrf()
         const deletePromise = axios
-            .delete(`/api/admin/gallery/${id}`)
+            .delete(`/api/panel/gallery/${id}`)
             .then(res => {
                 if (res.status === 200) {
                     router.refresh()

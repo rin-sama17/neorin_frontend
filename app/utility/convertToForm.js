@@ -8,7 +8,9 @@ export default function convertToForm(values) {
     })
 
     if (values.image) {
-        formData.append('image', values.image)
+        if (values.image instanceof File) {
+            formData.append('image', values.image)
+        }
     }
     if (values.images) {
         for (let i = 0; i < values.images.length; i++) {

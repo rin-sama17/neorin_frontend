@@ -15,6 +15,10 @@ const sidebarItems = [
         href: '/admin/pages',
     },
     {
+        title: 'مدیریت اسلایدر ها',
+        href: '/admin/slider',
+    },
+    {
         title: 'مدیریت نسبت دسته بندی',
         href: '/admin/category-attribute',
     },
@@ -28,7 +32,7 @@ const sidebarItems = [
     },
     {
         title: 'مدیریت کاربران',
-        href: '/admin/user',
+        href: '/admin/users',
     },
     {
         title: 'مدیریت ادمین',

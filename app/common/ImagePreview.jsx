@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-const ImagePreview = ({ item }) => {
+const ImagePreview = ({ item, isLink }) => {
     return (
         <div>
             {item instanceof File ? (
@@ -11,7 +11,7 @@ const ImagePreview = ({ item }) => {
                 />
             ) : (
                 <Image
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.image ? item.image.currentImage : item.currentImage}`}
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${isLink ? item : item.image ? item.image.currentImage : item.currentImage}`}
                     width={208}
                     height={208}
                     alt="uploaded image"

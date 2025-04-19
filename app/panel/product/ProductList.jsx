@@ -1,9 +1,9 @@
 'use client'
-import { useProductRequest } from '@/hooks/admin/useProductRequest'
 import Table from '@/common/Table'
 import ConfirmAllert from '@/components/ConfirmAllert'
 import Link from 'next/link'
 import { converterToJalali } from '@/utility'
+import { useProductRequest } from '@/hooks/panel/useProductRequest'
 
 const ProductList = ({ products }) => {
     const { deleteProduct } = useProductRequest()
@@ -57,12 +57,12 @@ const ProductList = ({ products }) => {
                     </td>
                     <td className="border px-4 py-2 text-right">
                         <Link
-                            href={`/admin/product/edit/${product.id}`}
+                            href={`/panel/product/edit/${product.id}`}
                             className="bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-4 rounded ml-2">
                             <i className="fa fa-edit"></i>
                         </Link>
                         <Link
-                            href={`/admin/product/gallery/${product.id}`}
+                            href={`/panel/product/gallery/${product.id}`}
                             className="bg-green-500 hover:bg-green-700  text-white font-bold py-2 px-4 rounded ml-2">
                             <i className="fa fa-photo"></i>
                         </Link>

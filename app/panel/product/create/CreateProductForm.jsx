@@ -4,9 +4,9 @@ import Label from '@/components/Label'
 import Input from '@/components/Input'
 import InputError from '@/components/InputError'
 import Link from 'next/link'
-import { useProductRequest } from '@/hooks/admin/useProductRequest'
 import { convertToForm } from '@/utility'
-import ImageUploader from '@/admin/services/ImageUploader'
+import { useProductRequest } from '@/hooks/panel/useProductRequest'
+import ImageUploader from '@/panel/services/ImageUploader'
 
 const CreateProductForm = ({ categories, cities }) => {
     const { createProduct } = useProductRequest()
@@ -20,15 +20,12 @@ const CreateProductForm = ({ categories, cities }) => {
                 category_id: '',
                 city_id: '',
                 contact: '',
-                is_special: 0,
-                is_ladder: 0,
                 image: '',
                 price: '',
                 tags: '',
                 lat: '',
                 lng: '',
                 willing_to_trade: 0,
-                status: 1,
             }}
             onSubmit={async (values, { setErrors }) => {
                 const data = convertToForm(values)
@@ -113,42 +110,6 @@ const CreateProductForm = ({ categories, cities }) => {
 
                         <InputError name="tags" />
                     </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="status">وضعیت</Label>
-                        <Input
-                            type="text"
-                            name="status"
-                            as="select"
-                            className="pr-9">
-                            <option value={1}>فعال</option>
-                            <option value={0}>غیرفعال</option>
-                        </Input>
-                        <InputError name="status" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="is_special">ویژه</Label>
-                        <Input
-                            type="text"
-                            name="is_special"
-                            as="select"
-                            className="pr-9">
-                            <option value={0}>غیرفعال</option>
-                            <option value={1}>فعال</option>
-                        </Input>
-                        <InputError name="is_special" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="is_ladder">نردبان</Label>
-                        <Input
-                            type="text"
-                            name="is_ladder"
-                            as="select"
-                            className="pr-9">
-                            <option value={0}>غیرفعال</option>
-                            <option value={1}>فعال</option>
-                        </Input>
-                        <InputError name="is_ladder" />
-                    </div>
 
                     <div className="col-span-3">
                         <Label htmlFor="contact">ارتباط</Label>
@@ -212,7 +173,7 @@ const CreateProductForm = ({ categories, cities }) => {
                             ساخت محصول
                         </button>
                         <Link
-                            href="/admin/product"
+                            href="/panel/product"
                             className="btn btn-secondary mr-4">
                             انصراف
                         </Link>
