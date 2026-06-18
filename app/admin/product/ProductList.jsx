@@ -1,7 +1,7 @@
 'use client'
 import { useProductRequest } from '@/hooks/admin/useProductRequest'
-import Table from '@/common/Table'
-import ConfirmAllert from '@/components/ConfirmAllert'
+import Table from '@/common/other/Table'
+import ConfirmAllert from '@/common/other/ConfirmAllert'
 import Link from 'next/link'
 import { converterToJalali } from '@/utility'
 
@@ -43,8 +43,8 @@ const ProductList = ({ products }) => {
                             ? product.category.name
                             : 'دسته حذف شده'}
                     </td>
-                    <td className="border px-4 py-2 text-right">
-                        {product.description}
+                    <td className="border px-4 py-2 text-right w-52 ">
+                        <h6 className="line-clamp-2">{product.description}</h6>
                     </td>
                     <td className="border px-4 py-2 text-right">
                         {product.product_type}

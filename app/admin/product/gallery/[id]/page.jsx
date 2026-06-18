@@ -1,5 +1,5 @@
 import GalleryUploader from './GalleryUploader'
-import LinkButton from '@/components/LinkButton'
+import LinkButton from '@/components/navigation/LinkButton'
 import { getProduct } from '@/admin/services'
 
 const page = async ({ params }) => {

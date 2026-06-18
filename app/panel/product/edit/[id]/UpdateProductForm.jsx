@@ -1,13 +1,14 @@
 'use client'
 import { Form, Formik } from 'formik'
-import Label from '@/components/Label'
-import Input from '@/components/Input'
-import InputError from '@/components/InputError'
+import Label from '@/common/inputs/Label'
+import Input from '@/common/inputs/Input'
+import InputError from '@/common/inputs/InputError'
 import Link from 'next/link'
-import LinkButton from '@/components/LinkButton'
+import LinkButton from '@/components/navigation/LinkButton'
 import { convertToForm } from '@/utility'
 import { useProductRequest } from '@/hooks/panel/useProductRequest'
-import ImageUploader from '@/panel/services/ImageUploader'
+import ImageUploader from '@/common/image/ImageUploader'
+import PriceInput from '@/common/inputs/PriceInput'
 
 const UpdateProductForm = ({ categories, cities, product }) => {
     const { updateProduct } = useProductRequest()
@@ -86,8 +87,13 @@ const UpdateProductForm = ({ categories, cities, product }) => {
 
                     <div className="col-span-1">
                         <Label htmlFor="price">قیمت</Label>
-                        <Input type="text" name="price" />
-                        <InputError name="price" />s
+                        <PriceInput
+                            setFieldValue={setFieldValue}
+                            name="price"
+                            value={values}
+                        />
+
+                        <InputError name="price" />
                     </div>
                     <div className="col-span-1">
                         <Label htmlFor="product_type">نوع محصول</Label>

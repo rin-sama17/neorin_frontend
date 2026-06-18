@@ -1,8 +1,8 @@
 'use client'
 import { Form, Formik } from 'formik'
-import Label from '@/components/Label'
-import Input from '@/components/Input'
-import InputError from '@/components/InputError'
+import Label from '@/common/inputs/Label'
+import Input from '@/common/inputs/Input'
+import InputError from '@/common/inputs/InputError'
 import Link from 'next/link'
 import { useCategoryRequest } from '@/hooks/admin/useCategoryRequest'
 
@@ -90,11 +90,13 @@ const UpdateCategoryForm = ({ category, categories }) => {
                         as="select">
                         <option value="">دسته اصلی</option>
 
-                        {categories?.data.map(category => (
-                            <option key={category.id} value={category.id}>
-                                {category.name}
-                            </option>
-                        ))}
+                        {categories?.data
+                            .filter(cat => cat.id !== category.id)
+                            .map(cat => (
+                                <option key={cat.id} value={cat.id}>
+                                    {cat.name}
+                                </option>
+                            ))}
                     </Input>
                     <InputError name="parent_id" />
                 </div>

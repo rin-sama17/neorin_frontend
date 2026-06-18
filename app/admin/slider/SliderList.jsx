@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
-import ConfirmAllert from '@/components/ConfirmAllert'
-import Table from '@/common/Table'
+import ConfirmAllert from '@/common/other/ConfirmAllert'
+import Table from '@/common/other/Table'
 import { useSliderRequest } from '@/hooks/admin/useSliderRequest'
 import { converterToJalali } from '@/utility'
 

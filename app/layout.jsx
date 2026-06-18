@@ -1,3 +1,5 @@
+import TopBar from './components/home/top-bar/TopBar'
+import { MainHeader, Navbar } from './components/navbar'
 import './styles/globals.css'
 import localFont from 'next/font/local'
 
@@ -9,12 +11,13 @@ export const metadata = {
 const vazirmatn = localFont({
     src: [
         {
-            path: './fonts/webfonts/Vazirmatn-Regular.woff2',
+            path: './fonts/Vazirmatn-Regular.woff2',
             weight: '400',
             style: 'normal',
         },
+
         {
-            path: './fonts/webfonts/Vazirmatn-Bold.woff2',
+            path: './fonts/Vazirmatn-Bold.woff2',
             weight: '700',
             style: 'normal',
         },
@@ -27,12 +30,15 @@ export default function RootLayout({ children }) {
     return (
         <html lang="fa" className={vazirmatn.variable}>
             <head>
-                <link
-                    rel="stylesheet"
-                    href="/font-awesome-4.7.0/css/font-awesome.min.css"
-                />
+                <link rel="stylesheet" href="/font-awesome-7.2.0/css/all.css" />
             </head>
-            <body>{children}</body>
+
+            <body className="bg-primary/5">
+                <TopBar />
+                <MainHeader />
+                <Navbar />
+                <div className="mt-4">{children}</div>
+            </body>
         </html>
     )
 }

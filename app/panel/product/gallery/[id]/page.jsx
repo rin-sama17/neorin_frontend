@@ -1,6 +1,6 @@
 import { getProduct } from '@/panel/services'
 import GalleryUploader from './GalleryUploader'
-import LinkButton from '@/components/LinkButton'
+import LinkButton from '@/components/navigation/LinkButton'
 
 const page = async ({ params }) => {
     const { id } = params

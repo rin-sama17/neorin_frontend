@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import ResponsiveNavLink from '../ResponsiveNavLink'
+import ResponsiveNavLink from '../navigation/ResponsiveNavLink'
 
 const NavMenu = () => {
     const navBtn = [

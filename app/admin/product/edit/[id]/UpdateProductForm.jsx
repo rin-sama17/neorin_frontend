@@ -1,16 +1,18 @@
 'use client'
 import { Form, Formik } from 'formik'
-import Label from '@/components/Label'
-import Input from '@/components/Input'
-import InputError from '@/components/InputError'
+import Label from '@/common/inputs/Label'
+import Input from '@/common/inputs/Input'
+import InputError from '@/common/inputs/InputError'
 import Link from 'next/link'
-import LinkButton from '@/components/LinkButton'
+import LinkButton from '@/components/navigation/LinkButton'
 import { useProductRequest } from '@/hooks/admin/useProductRequest'
 import { convertToForm } from '@/utility'
-import ImageUploader from '@/admin/services/ImageUploader'
+import ImageUploader from '@/common/image/ImageUploader'
+import PriceInput from '@/common/inputs/PriceInput'
 
 const UpdateProductForm = ({ categories, cities, product }) => {
     const { updateProduct } = useProductRequest()
+
     return (
         <Formik
             initialValues={{
@@ -39,7 +41,7 @@ const UpdateProductForm = ({ categories, cities, product }) => {
                     setErrors,
                 })
             }}>
-            {({ setFieldValue, values }) => (
+            {({ setFieldValue, values, handleChange }) => (
                 <Form className="gap-4 p-3 grid lg:grid-cols-3">
                     <div className="col-span-3">
                         <div className="mb-2">
@@ -86,11 +88,14 @@ const UpdateProductForm = ({ categories, cities, product }) => {
                             setFieldValue={setFieldValue}
                         />
                     </div>
-
                     <div className="col-span-1">
                         <Label htmlFor="price">قیمت</Label>
-                        <Input type="text" name="price" />
-                        <InputError name="price" />s
+                        <PriceInput
+                            setFieldValue={setFieldValue}
+                            name="price"
+                            value={values}
+                        />
+                        <InputError name="price" />
                     </div>
                     <div className="col-span-1">
                         <Label htmlFor="product_type">نوع محصول</Label>

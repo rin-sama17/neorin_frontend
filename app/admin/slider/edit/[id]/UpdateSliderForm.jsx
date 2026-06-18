@@ -1,11 +1,11 @@
 'use client'
 import { Form, Formik } from 'formik'
-import Label from '@/components/Label'
-import Input from '@/components/Input'
-import InputError from '@/components/InputError'
+import Label from '@/common/inputs/Label'
+import Input from '@/common/inputs/Input'
+import InputError from '@/common/inputs/InputError'
 import Link from 'next/link'
 import { useSliderRequest } from '@/hooks/admin/useSliderRequest'
-import ImageUploader from '@/admin/services/ImageUploader'
+import ImageUploader from '@/common/image/ImageUploader'
 import { convertToForm } from '@/utility'
 
 const UpdateSliderForm = ({ slider }) => {

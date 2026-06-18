@@ -30,7 +30,7 @@ const NavContainer = ({ children }) => {
 
     return (
         <div
-            className={`sticky top-0 left-0 right-0 z-50 shadow-lg  bg-white py-2 transition-transform duration-300 ${
+            className={`sticky top-0 left-0 right-0 z-50 shadow-lg  rounded-b-neu bg-white py-2 transition-transform duration-300 ${
                 showNavbar ? 'transform-none' : '-translate-y-full'
             }`}>
             {children}

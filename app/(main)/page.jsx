@@ -1,8 +1,11 @@
-import { Navbar } from '../components/navbar'
-import Footer from './Footer'
-import HeroSlider from './HeroSlider'
-import ProductGrid from './ProductGrid'
-import Testimonials from './Testimonials'
+import { Navbar, MainHeader } from '@/components/navbar'
+import Footer from '@/components/footer/Footer'
+import HeroSlider from '@/components/home/slider/hero-slider/HeroSlider'
+import ProductGrid from '@/components/home/product-grid/ProductGrid'
+import Testimonials from '@/components/home/Testimonials/Testimonials'
+import VerticalSliderSection from '@/components/home/slider/vertical-slider/VerticalSliderSection'
+import HiroCategory from '@/components/home/hero-category/HiroCategory'
+
 export const metadata = {
     title: 'Laravel',
 }
@@ -10,10 +13,10 @@ export const metadata = {
 const Home = () => {
     return (
         <>
-            <Navbar />
-
             <HeroSlider />
+            <HiroCategory />
             <ProductGrid />
+            <VerticalSliderSection />
             <Testimonials />
             <Footer />
         </>

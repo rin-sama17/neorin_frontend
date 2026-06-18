@@ -1,5 +1,5 @@
-import Table from '@/common/Table'
-import ImagePreview from '@/common/ImagePreview'
+import Table from '@/common/other/Table'
+import ImagePreview from '@/common/image/ImagePreview'
 import { useGalleryRequest } from '@/hooks/admin/useGalleryRequest'
 import { converterToJalali } from '@/utility'
 

@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
-import Input from '@/components/Input'
-import InputError from '@/components/InputError'
-import Label from '@/components/Label'
+import Input from '@/common/inputs/Input'
+import InputError from '@/common/inputs/InputError'
+import Label from '@/common/inputs/Label'
 import OtpVerify from '../OtpVerify'
 
 const Page = () => {

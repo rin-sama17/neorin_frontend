@@ -1,12 +1,14 @@
 'use client'
 import { Form, Formik } from 'formik'
-import Label from '@/components/Label'
-import Input from '@/components/Input'
-import InputError from '@/components/InputError'
+import Label from '@/common/inputs/Label'
+import Input from '@/common/inputs/Input'
+import InputError from '@/common/inputs/InputError'
 import Link from 'next/link'
 import { useProductRequest } from '@/hooks/admin/useProductRequest'
 import { convertToForm } from '@/utility'
-import ImageUploader from '@/admin/services/ImageUploader'
+import ImageUploader from '@/common/image/ImageUploader'
+
+import PriceInput from '@/common/inputs/PriceInput'
 
 const CreateProductForm = ({ categories, cities }) => {
     const { createProduct } = useProductRequest()
@@ -31,13 +33,14 @@ const CreateProductForm = ({ categories, cities }) => {
                 status: 1,
             }}
             onSubmit={async (values, { setErrors }) => {
+                console.log(values)
                 const data = convertToForm(values)
                 createProduct({
                     data,
                     setErrors,
                 })
             }}>
-            {({ setFieldValue, values }) => (
+            {({ setFieldValue, values, handleChange }) => (
                 <Form className="gap-4 p-3 grid lg:grid-cols-3">
                     <div className="col-span-3">
                         <Label htmlFor="title">نام *</Label>
@@ -75,7 +78,11 @@ const CreateProductForm = ({ categories, cities }) => {
 
                     <div className="col-span-1">
                         <Label htmlFor="price">قیمت</Label>
-                        <Input type="text" name="price" />
+                        <PriceInput
+                            setFieldValue={setFieldValue}
+                            name="price"
+                            value={values}
+                        />
 
                         <InputError name="price" />
                     </div>

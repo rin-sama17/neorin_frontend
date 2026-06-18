@@ -1,6 +1,6 @@
 'use client'
-import Table from '@/common/Table'
-import ConfirmAllert from '@/components/ConfirmAllert'
+import Table from '@/common/other/Table'
+import ConfirmAllert from '@/common/other/ConfirmAllert'
 import Link from 'next/link'
 import { converterToJalali } from '@/utility'
 import { useProductRequest } from '@/hooks/panel/useProductRequest'

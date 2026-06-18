@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import AuthCard from './AuthCard'
-import ApplicationLogo from '../components/ApplicationLogo'
+import ApplicationLogo from '@/components/navigation/ApplicationLogo'
 
 export const metadata = {
     title: 'Laravel',

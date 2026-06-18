@@ -11,7 +11,7 @@ export const useGalleryRequest = () => {
         await csrf()
 
         axios
-            .post('/api/admin/gallery', data, {
+            .post('/api/admin/product/gallery', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Accept: 'application/json',
@@ -33,7 +33,7 @@ export const useGalleryRequest = () => {
     const deleteGallery = async ({ id, setState }) => {
         await csrf()
         const deletePromise = axios
-            .delete(`/api/admin/gallery/${id}`)
+            .delete(`/api/admin/product/gallery/${id}`)
             .then(res => {
                 if (res.status === 200) {
                     router.refresh()

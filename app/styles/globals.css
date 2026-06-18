@@ -1,23 +1,124 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer utilities {
-    .btn {
-        @apply block w-fit transition-all  my-4 px-4 py-3 rounded-lg text-lg  text-black focus:outline-none border border-transparent focus:ring ring-gray-300 disabled:opacity-25;
-    }
-    .btn-success {
-        @apply bg-green-300 hover:bg-green-200 active:bg-green-600 focus:border-green-600;
-    }
-    .btn-primary {
-        @apply bg-blue-300 hover:bg-blue-200 active:bg-blue-600 focus:border-blue-600;
-    }
-    .btn-secondary {
-        @apply bg-red-300 hover:bg-red-200 active:bg-red-600 focus:border-red-600;
-    }
+:root {
+    font-family: var(--font-vazirmatn), sans-serif;
 }
 
 body {
     font-family: var(--font-vazirmatn);
     direction: rtl;
+    background: var(--background);
+    color: var(--text-primary);
+}
+
+@theme {
+    --font-vazirmatnn: var(--font-vazirmatn);
+    --color-primary: #24246d;
+    --color-secondary: #ff8512;
+
+    --color-background: #f4f4f8;
+    --color-surface: #ffffff;
+
+    --color-text-primary: #1e1e2f;
+    --color-text-secondary: #6f7085;
+    --radius-neu: 24px;
+    --radius-card: 32px;
+
+    --shadow-neu: 8px 8px 18px rgba(190, 190, 210, 0.35),
+        -8px -8px 18px rgba(255, 255, 255, 0.95);
+
+    --shadow-neu-sm: 4px 4px 10px rgba(190, 190, 210, 0.25),
+        -4px -4px 10px rgba(255, 255, 255, 0.9);
+
+    --shadow-neu-lg: 14px 14px 30px rgba(190, 190, 210, 0.4),
+        -14px -14px 30px rgba(255, 255, 255, 0.95);
+    --shadow-hover: 0 20px 50px rgba(36, 36, 109, 0.12);
+
+    --shadow-card: 0 15px 40px rgba(36, 36, 109, 0.08);
+
+    @keyframes scroll-up {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(-50%);
+        }
+    }
+
+    @keyframes scroll-down {
+        0% {
+            transform: translateY(-50%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    --animate-scroll-up: scroll-up linear infinite;
+    --animate-scroll-down: scroll-down linear infinite;
+}
+@layer utilities {
+    .input {
+        @apply w-full rounded-2xl bg-white px-4 py-3 shadow-neu-sm outline-none transition-all duration-300;
+    }
+
+    .input:focus {
+        @apply ring-2 ring-primary/20;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center rounded-neu px-5 py-3 font-medium transition-all duration-300;
+    }
+
+    .btn-primary {
+        @apply bg-primary text-white shadow-card hover:-translate-y-1 hover:shadow-hover;
+    }
+
+    .btn-secondary {
+        @apply bg-secondary text-white shadow-card hover:-translate-y-1 hover:shadow-hover;
+    }
+
+    .btn-outline {
+        @apply border border-primary text-primary hover:bg-primary hover:text-white;
+    }
+
+    .neu-card {
+        @apply rounded-card bg-white shadow-neu;
+    }
+
+    .neu-card-hover {
+        @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-hover;
+    }
+
+    .section-title {
+        @apply text-primary text-3xl font-black md:text-4xl;
+    }
+
+    .price {
+        @apply text-primary text-xl font-black;
+    }
+
+    .muted {
+        @apply text-text-secondary;
+    }
+}
+
+.swiper-slide-thumb {
+    @apply !h-20 !w-20 rounded-xl brightness-50 transition-all duration-300 hover:brightness-75;
+}
+
+.swiper-slide-thumb-active {
+    @apply brightness-100 ring-2 ring-primary;
+}
+
+.group:hover ~ .group .chevron {
+    transform: rotate(180deg);
+}
+@utility container {
+    margin-inline: auto;
+}
+
+i {
+    width: 24px;
+    height: 24px;
 }
