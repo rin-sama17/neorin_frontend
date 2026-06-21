@@ -23,7 +23,7 @@ const NavSearch = ({ lg }) => {
         <>
             <input
                 type="text"
-                className="input max-w-96"
+                className="w-full input max-w-96"
                 placeholder="جستجو..."
             />
         </>

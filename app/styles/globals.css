@@ -59,11 +59,7 @@ body {
 }
 @layer utilities {
     .input {
-        @apply w-full rounded-2xl bg-white px-4 py-3 shadow-neu-sm outline-none transition-all duration-300;
-    }
-
-    .input:focus {
-        @apply ring-2 ring-primary/20;
+        @apply px-2 rounded-lg  ring-2 ring-gray-300 py-1.5 text-text-primary focus:outline-none  focus:ring-secondary/80;
     }
 
     .btn {

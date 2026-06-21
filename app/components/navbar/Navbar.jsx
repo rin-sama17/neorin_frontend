@@ -5,8 +5,8 @@ import Categories from './Categories'
 const Navbar = () => {
     const navBtn = [
         { title: 'دسته بندی', to: '/products' },
-        { title: ' خانه', to: '/products' },
-        { title: 'محصولات', to: '/products' },
+        { title: ' خانه', to: '/' },
+        { title: 'سفارش', to: '/order' },
         { title: 'محصولات', to: '/products' },
         { title: 'درباره ما', to: '/about-us' },
     ]
@@ -18,7 +18,11 @@ const Navbar = () => {
                         <Categories />
                         {navBtn.map((item, index) => (
                             <li key={index}>
-                                <LinkButton href={item.to} title={item.title} />
+                                <LinkButton
+                                    href={item.to}
+                                    title={item.title}
+                                    className="text-lg"
+                                />
                             </li>
                         ))}
                     </ul>
