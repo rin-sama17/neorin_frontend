@@ -8,17 +8,19 @@ export const metadata = {
 
 const Layout = ({ children }) => {
     return (
-        <div className="flex min-h-screen">
-            <div className="w-1/6 min-h-screen bg-indigo-800">
-                <Sidebar />
-            </div>
+       <div className="flex min-h-screen ">
+    <aside className="w-64 shrink-0 bg-primary">
+        <Sidebar />
+    </aside>
 
-            <div className="w-5/6">
-                <Toaster />
-                <Header />
-                {children}
-            </div>
+    <main className="flex-1 min-w-0">
+        <Toaster />
+        <Header />
+        <div className="p-6">
+            {children}
         </div>
+    </main>
+</div>
     )
 }
 

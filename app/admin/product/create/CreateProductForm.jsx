@@ -41,190 +41,142 @@ const CreateProductForm = ({ categories, cities }) => {
                 })
             }}>
             {({ setFieldValue, values, handleChange }) => (
-                <Form className="gap-4 p-3 grid lg:grid-cols-3">
-                    <div className="col-span-3">
-                        <Label htmlFor="title">نام *</Label>
-                        <Input
-                            type="text"
-                            name="title"
-                            placeholder="نام محصول"
-                        />
-                        <p className="mt-2 text-sm text-gray-500 mr-2">
-                            بین 2 تا 120 کاراکتر
-                        </p>
-                        <InputError name="title" />
-                    </div>
-                    <div className="col-span-3">
-                        <Label htmlFor="description">توضیحات</Label>
-                        <Input
-                            as="textarea"
-                            type="text"
-                            name="description"
-                            placeholder="توضیحات محصول"
-                        />
-                        <p className="mt-2 text-sm text-gray-500 mr-2">
-                            بین 2 تا 500 کاراکتر
-                        </p>
+               <Form className="bg-white rounded-xl border border-slate-200 p-6">
 
-                        <InputError name="description" />
-                    </div>
-                    <div className="col-span-3">
-                        <ImageUploader
-                            value={values.image}
-                            name="image"
-                            setFieldValue={setFieldValue}
-                        />
-                    </div>
+    <div className="mb-6">
+        <h2 className="text-lg font-semibold">
+            محصول جدید
+        </h2>
+    </div>
 
-                    <div className="col-span-1">
-                        <Label htmlFor="price">قیمت</Label>
-                        <PriceInput
-                            setFieldValue={setFieldValue}
-                            name="price"
-                            value={values}
-                        />
+    <div className="grid lg:grid-cols-2 gap-4">
 
-                        <InputError name="price" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="product_type">نوع محصول</Label>
-                        <Input type="text" name="product_type" />
-                        <p className="mt-2 text-sm text-gray-500 mr-2">
-                            برای مثال: بازی
-                        </p>
-                        <InputError name="product_type" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="product_status">وضعیت محصول *</Label>
-                        <Input
-                            type="text"
-                            name="product_status"
-                            as="select"
-                            className="pr-9">
-                            <option value={'در حد نو'}>در حد نو</option>
-                            <option value={'کارکرده'}>کارکرده</option>
-                        </Input>
-                        <InputError name="product_status" />
-                    </div>
-                    <div className="col-span-3">
-                        <Label htmlFor="tags">برچسب ها</Label>
-                        <Input
-                            as="textarea"
-                            type="text"
-                            name="tags"
-                            placeholder="برچسب های محصول"
-                        />
-                        <p className="mt-2 text-sm text-gray-500 mr-2">
-                            با / از هم جدا کنید
-                        </p>
+        <div>
+            <Label>نام محصول</Label>
+            <Input
+                name="title"
+                placeholder="ست روتختی آرام"
+            />
+            <InputError name="title" />
+        </div>
 
-                        <InputError name="tags" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="status">وضعیت</Label>
-                        <Input
-                            type="text"
-                            name="status"
-                            as="select"
-                            className="pr-9">
-                            <option value={1}>فعال</option>
-                            <option value={0}>غیرفعال</option>
-                        </Input>
-                        <InputError name="status" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="is_special">ویژه</Label>
-                        <Input
-                            type="text"
-                            name="is_special"
-                            as="select"
-                            className="pr-9">
-                            <option value={0}>غیرفعال</option>
-                            <option value={1}>فعال</option>
-                        </Input>
-                        <InputError name="is_special" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="is_ladder">نردبان</Label>
-                        <Input
-                            type="text"
-                            name="is_ladder"
-                            as="select"
-                            className="pr-9">
-                            <option value={0}>غیرفعال</option>
-                            <option value={1}>فعال</option>
-                        </Input>
-                        <InputError name="is_ladder" />
-                    </div>
+        <div>
+            <Label>قیمت</Label>
+            <PriceInput
+                value={values}
+                name="price"
+                setFieldValue={setFieldValue}
+            />
+            <InputError name="price" />
+        </div>
 
-                    <div className="col-span-3">
-                        <Label htmlFor="contact">ارتباط</Label>
-                        <Input
-                            type="text"
-                            name="contact"
-                            as="textarea"
-                            placeholder="راه های ارتباطی شما"
-                        />
+        <div>
+            <Label>دسته بندی</Label>
 
-                        <InputError name="contact" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="willing_to_trade">مایل به معاوضه</Label>
-                        <Input
-                            type="text"
-                            name="willing_to_trade"
-                            as="select"
-                            className="pr-9">
-                            <option value={1}>فعال</option>
-                            <option value={0}>غیرفعال</option>
-                        </Input>
-                        <InputError name="willing_to_trade" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="city_id">شهر *</Label>
-                        <Input
-                            type="text"
-                            name="city_id"
-                            className="pr-9"
-                            as="select">
-                            <option value="">---انتخاب کنید---</option>
+            <Input
+                as="select"
+                name="category"
+            >
+                <option value="">
+                    انتخاب دسته
+                </option>
 
-                            {cities?.data.map(city => (
-                                <option key={city.id} value={city.id}>
-                                    {city.name}
-                                </option>
-                            ))}
-                        </Input>
-                        <InputError name="city_id" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="category_id">دسته بندی *</Label>
-                        <Input
-                            type="text"
-                            name="category_id"
-                            className="pr-9"
-                            as="select">
-                            <option value="">---انتخاب کنید---</option>
+                {categories.data.map(category => (
+                    <option
+                        key={category.id}
+                        value={category.id}
+                    >
+                        {category.name}
+                    </option>
+                ))}
+            </Input>
 
-                            {categories?.data.map(category => (
-                                <option key={category.id} value={category.id}>
-                                    {category.name}
-                                </option>
-                            ))}
-                        </Input>
-                        <InputError name="category_id" />
-                    </div>
-                    <div className="flex">
-                        <button className="btn btn-primary mr-4" type="submit">
-                            ساخت محصول
-                        </button>
-                        <Link
-                            href="/admin/product"
-                            className="btn btn-secondary mr-4">
-                            انصراف
-                        </Link>
-                    </div>
-                </Form>
+            <InputError name="category" />
+        </div>
+
+        <div>
+            <Label>جنس پارچه</Label>
+
+            <Input
+                name="material"
+                placeholder="پنبه"
+            />
+
+            <InputError name="material" />
+        </div>
+
+    </div>
+
+    <div className="mt-4">
+        <Label>توضیحات</Label>
+
+        <Input
+            as="textarea"
+            rows={5}
+            name="description"
+            placeholder="توضیحات محصول"
+        />
+
+        <InputError name="description" />
+    </div>
+
+    <div className="grid lg:grid-cols-2 gap-4 mt-4">
+
+        <div>
+            <Label>وضعیت</Label>
+
+            <Input
+                as="select"
+                name="status"
+            >
+                <option value={1}>
+                    فعال
+                </option>
+
+                <option value={0}>
+                    غیرفعال
+                </option>
+            </Input>
+        </div>
+
+        <div>
+            <Label>محصول ویژه</Label>
+
+            <Input
+                as="select"
+                name="is_special"
+            >
+                <option value={0}>
+                    خیر
+                </option>
+
+                <option value={1}>
+                    بله
+                </option>
+            </Input>
+        </div>
+
+    </div>
+
+    <div className="mt-6 border-t pt-4 flex justify-end gap-2">
+
+        <Link
+            href="/admin/product"
+            className="px-4 h-9 border rounded-md flex items-center"
+        >
+            انصراف
+        </Link>
+
+        <button
+            type="submit"
+            className="px-4 h-9 rounded-md bg-primary text-white"
+        >
+            ذخیره
+        </button>
+
+    </div>
+
+</Form>
             )}
         </Formik>
     )

@@ -6,39 +6,48 @@ const ConfirmAllert = ({ title, helper, onConfirm }) => {
     return (
         <>
             <button
-                type="button"
-                onClick={() => setOpen(true)}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                <i className="fa fa-trash"></i>
-            </button>
+        type="button"
+        onClick={() => setOpen(true)}
+        className="p-2 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-md transition"
+    >
+        <i className="fa fa-trash" />
+    </button>
             {open && (
-                <div
-                    onClick={() => setOpen(false)}
-                    className="fixed top-0 z-50 right-0 transition-all duration-200 min-h-screen w-full bg-slate-500/30 flex justify-center items-center space-y-3">
-                    <div
-                        onClick={e => e.stopPropagation()}
-                        className="p-5 flex flex-col  bg-white rounded-lg items-center justify-center align-middle">
-                        <div className="flex flex-col"></div>
-                        <h2 className="text-xl font-bold text-black">
-                            {title}
-                        </h2>
-                        <h2 className="text-sm font-extralight text-gray-500 mt-2 ">
-                            {helper}
-                        </h2>
-                        <div className="flex">
-                            <button
-                                className="btn btn-primary"
-                                onClick={onConfirm}>
-                                تایید
-                            </button>
-                            <button
-                                className="btn btn-secondary mr-2"
-                                onClick={() => setOpen(false)}>
-                                انصراف
-                            </button>
-                        </div>
-                    </div>
-                </div>
+               <div
+    onClick={() => setOpen(false)}
+    className="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm flex items-center justify-center"
+>
+    <div
+        onClick={e => e.stopPropagation()}
+        className="w-full max-w-sm rounded-xl bg-white p-5 shadow-lg"
+    >
+        <h2 className="text-base font-semibold text-primary">
+            {title}
+        </h2>
+
+        {helper && (
+            <p className="mt-2 text-sm text-slate-500">
+                {helper}
+            </p>
+        )}
+
+        <div className="mt-5 flex justify-end gap-2">
+            <button
+                onClick={() => setOpen(false)}
+                className="px-3 py-1.5 text-sm rounded-md border border-slate-200 text-slate-600 hover:bg-slate-50"
+            >
+                انصراف
+            </button>
+
+            <button
+                onClick={onConfirm}
+                className="px-3 py-1.5 text-sm rounded-md bg-red-500 text-white hover:bg-red-600"
+            >
+                تایید
+            </button>
+        </div>
+    </div>
+</div>
             )}
         </>
     )

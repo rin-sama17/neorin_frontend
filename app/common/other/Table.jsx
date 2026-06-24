@@ -7,21 +7,25 @@ const Table = ({ headers, children }) => {
         )
     }
     return (
-        <div>
-            <table className="min-w-full bg-white border border-gray-300 rounded-md shadow-md overflow-x-scroll">
-                <thead className="bg-gray-100">
-                    <tr>
-                        {headers.map((th, index) => (
-                            <th
-                                className="border px-4 py-2 text-right"
-                                key={index}>
-                                {th}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>{children}</tbody>
-            </table>
+             <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
+            <div className="overflow-x-auto">
+                <table className="w-full min-w-max">
+                    <thead>
+                        <tr className="bg-slate-50 border-b">
+                            {headers.map(header => (
+                                <th
+                                    key={header}
+                                    className="px-4 py-3 text-right text-sm font-semibold"
+                                >
+                                    {header}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+
+                    <tbody>{children}</tbody>
+                </table>
+            </div>
         </div>
     )
 }

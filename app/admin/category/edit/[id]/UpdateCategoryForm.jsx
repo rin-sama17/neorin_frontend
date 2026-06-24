@@ -32,85 +32,111 @@ const UpdateCategoryForm = ({ category, categories }) => {
                     setErrors,
                 })
             }}>
-            <Form className="gap-4 p-3 grid lg:grid-cols-2">
-                <div className="col-span-2">
-                    <Label htmlFor="name">نام *</Label>
-                    <Input
-                        type="text"
-                        name="name"
-                        placeholder="نام دسته بندی"
-                    />
-                    <p className="text-sm text-gray-500 mr-2">
-                        بین 2 تا 120 کاراکتر
-                    </p>
-                    <InputError name="name" />
-                </div>
+           <Form className="bg-white rounded-xl ">
 
-                <div className="col-span-2">
-                    <Label htmlFor="description">توضیحات *</Label>
-                    <Input
-                        as="textarea"
-                        type="text"
-                        name="description"
-                        placeholder="توضیحات دسته بندی"
-                    />
-                    <p className="text-sm text-gray-500 mr-2">
-                        بین 2 تا 500 کاراکتر
-                    </p>
-                    <InputError name="description" />
-                </div>
+    <div className="mb-6">
+        <h2 className="text-lg font-semibold">
+            ویرایش دسته بندی
+        </h2>
 
-                <div className="col-span-2">
-                    <Label htmlFor="icon">ایکون</Label>
-                    <Input type="text" name="icon" placeholder="fa" />
-                    <p className="text-sm text-gray-500 mr-2">
-                        ایکون font awesome
-                    </p>
-                    <InputError name="icon" />
-                </div>
-                <div className="col-span-1">
-                    <Label htmlFor="status">وضعیت</Label>
-                    <Input
-                        type="text"
-                        name="status"
-                        as="select"
-                        className="pr-9">
-                        <option value={1}>فعال</option>
-                        <option value={0}>غیرفعال</option>
-                    </Input>
-                    <InputError name="status" />
-                </div>
-                <div className="col-span-1">
-                    <Label htmlFor="parent_id">دسته پدر</Label>
+        <p className="text-sm text-slate-500 mt-1">
+            اطلاعات دسته بندی را وارد کنید.
+        </p>
+    </div>
 
-                    <Input
-                        type="text"
-                        name="parent_id"
-                        className="pr-9"
-                        as="select">
-                        <option value="">دسته اصلی</option>
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-                        {categories?.data
-                            .filter(cat => cat.id !== category.id)
-                            .map(cat => (
-                                <option key={cat.id} value={cat.id}>
-                                    {cat.name}
-                                </option>
-                            ))}
-                    </Input>
-                    <InputError name="parent_id" />
-                </div>
-                <div className="flex">
-                    <button className="btn btn-primary mr-4" type="submit">
-                        ویرایش دسته بندی
-                    </button>
-                    <Link
-                        href="/admin/category"
-                        className="btn btn-secondary mr-4">
-                        انصراف
-                    </Link>
-                </div>
-            </Form>
+        <div className="lg:col-span-2">
+            <Label htmlFor="name">نام دسته</Label>
+            <Input
+                name="name"
+                placeholder="مثال: پارچه مبلی"
+                className="w-full"
+            />
+            <InputError name="name" />
+        </div>
+
+        <div>
+            <Label htmlFor="icon">آیکون</Label>
+            <Input
+                name="icon"
+                placeholder="fa-box"
+                className="w-full"
+            />
+            <InputError name="icon" />
+        </div>
+
+        <div className="lg:col-span-3">
+            <Label htmlFor="description">توضیحات</Label>
+            <Input
+                as="textarea"
+                rows={4}
+                name="description"
+                className="w-full"
+                placeholder="توضیحات دسته بندی"
+            />
+            <InputError name="description" />
+        </div>
+
+        <div>
+            <Label htmlFor="parent_id">دسته والد</Label>
+
+            <Input
+                as="select"
+                name="parent_id"
+                className="w-full px-3"
+            >
+                <option value="">
+                    دسته اصلی
+                </option>
+
+                {categories?.data.map(category => (
+                    <option
+                        key={category.id}
+                        value={category.id}
+                    >
+                        {category.name}
+                    </option>
+                ))}
+            </Input>
+
+            <InputError name="parent_id" />
+        </div>
+
+        <div>
+            <Label htmlFor="status">وضعیت</Label>
+
+            <Input
+                as="select"
+                name="status"
+                className="w-full px-3"
+            >
+                <option value={1}>فعال</option>
+                <option value={0}>غیرفعال</option>
+            </Input>
+
+            <InputError name="status" />
+        </div>
+
+    </div>
+
+    <div className="flex justify-end gap-2 mt-6 pt-4 border-t">
+        <Link
+            href="/admin/category"
+            className="h-9 px-4 flex items-center rounded-md border border-slate-200 text-sm hover:bg-slate-50"
+        >
+            انصراف
+        </Link>
+
+        <button
+            type="submit"
+            className="h-9 px-4 rounded-md bg-primary text-white text-sm"
+        >
+            ذخیره
+        </button>
+    </div>
+
+</Form>
         </Formik>
     )
 }

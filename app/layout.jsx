@@ -1,5 +1,4 @@
-import TopBar from './components/home/top-bar/TopBar'
-import { MainHeader, Navbar } from './components/navbar'
+
 import './styles/globals.css'
 import localFont from 'next/font/local'
 
@@ -34,10 +33,8 @@ export default function RootLayout({ children }) {
             </head>
 
             <body className="bg-primary/5">
-                <TopBar />
-                <MainHeader />
-                <Navbar />
-                <div className="mt-4">{children}</div>
+                
+                <div>{children}</div>
             </body>
         </html>
     )

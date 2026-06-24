@@ -1,7 +1,6 @@
 import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-
 export const useCategoryRequest = () => {
     const router = useRouter()
 
@@ -16,6 +15,7 @@ export const useCategoryRequest = () => {
                 if (res.status === 201) {
                     toast.success(`دسته بندی با موفقیت ساخته شد`)
                     router.push('/admin/category')
+                    router.refresh()
                 }
             })
             .catch(error => {
@@ -57,10 +57,10 @@ export const useCategoryRequest = () => {
         })
     }
 
-    const deleteCategory = async ({ categoryId }) => {
+    const deleteCategory = async ({ id }) => {
         await csrf()
         const deletePromise = axios
-            .delete(`/api/admin/product/category/${categoryId}`)
+            .delete(`/api/admin/product/category/${id}`)
             .then(res => {
                 if (res.status === 200) {
                     router.refresh()
