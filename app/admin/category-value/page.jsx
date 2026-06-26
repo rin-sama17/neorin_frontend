@@ -7,16 +7,17 @@ const page = async () => {
 
     return (
         <div className="w-full">
-            <div className="p-4">
-                <h1 className="text-xl mb-4">مدیریت مقدار دسته بندی ها</h1>
+            <div className="flex items-center justify-between mb-4">
+                <h1 className="text-lg font-semibold">مدیریت مقدار نسبت ها</h1>
                 <Link
                     href="/admin/category-value/create"
-                    className="btn btn-success">
-                    ساخت مقدار جدید
+                    className="btn btn-secondary">
+                    <i className="fa-solid fa-plus" />
+                    <span>مقدار جدید</span>
                 </Link>
-
-                <CategoryValueList categoryValues={categoryValues} />
             </div>
+
+            <CategoryValueList categoryValues={categoryValues} />
         </div>
     )
 }

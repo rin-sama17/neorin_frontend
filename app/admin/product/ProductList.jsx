@@ -1,78 +1,82 @@
-'use client'
-import { useProductRequest } from '@/hooks/admin/useProductRequest'
 import Table from '@/common/other/Table'
-import ConfirmAllert from '@/common/other/ConfirmAllert'
 import Link from 'next/link'
 import { converterToJalali } from '@/utility'
+import DeleteProduct from './DeleteProduct'
+import DiscountManager from './DiscountManager'
 
 const ProductList = ({ products }) => {
-    const { deleteProduct } = useProductRequest()
-
     const getStatus = status => {
-        if (status === 0) return 'غیرفعال'
-        if (status === 1) return 'فعال'
-        if (status === 3) return 'در انتظار تایید'
+        if (status === 0)
+            return { text: 'غیرفعال', color: 'bg-red-50 text-red-700' }
+        if (status === 1)
+            return { text: 'فعال', color: 'bg-green-50 text-green-700' }
+        if (status === 3)
+            return {
+                text: 'در انتظار تایید',
+                color: 'bg-yellow-50 text-yellow-700',
+            }
     }
 
     return (
-        <Table
-            headers={[
-                'شناسه',
-                'نام',
-                'قیمت',
-                'دسته',
-                'توضیحات',
-                'نوع محصول',
-                'وضعیت',
-                'تاریخ',
-                'عملیات',
-            ]}>
+        <Table headers={['#', 'محصول', 'دسته', 'قیمت', 'وضعیت', 'تاریخ', '']}>
             {products.map(product => (
-                <tr className="hover:bg-gray-50" key={product.id}>
-                    <td className="border px-4 py-2 text-right">
-                        {product.id}
+                <tr
+                    key={product.id}
+                    className="border-b hover:bg-slate-50 transition-colors">
+                    <td className="px-3 py-3 text-sm">{product.id}</td>
+
+                    <td className="px-3 py-3">
+                        <div>
+                            <p className="font-medium text-sm">
+                                {product.title}
+                            </p>
+
+                            <p className=" text-slate-500">
+                                {product.material}
+                            </p>
+                        </div>
                     </td>
-                    <td className="border px-4 py-2 text-right">
-                        {product.title}
+
+                    <td className="px-3 py-3 text-sm text-slate-600">
+                        {product.category?.name || '-'}
                     </td>
-                    <td className="border px-4 py-2 text-right">
-                        {product.price ? product.price : 'مایل به معاوضه'}
+
+                    <td className="px-3 py-3 text-sm font-medium">
+                        {Number(product.price).toLocaleString()}
                     </td>
-                    <td className="border px-4 py-2 text-right">
-                        {product.category
-                            ? product.category.name
-                            : 'دسته حذف شده'}
+
+                    <td className="px-3 py-3">
+                        <span
+                            className={`inline-flex px-2 py-1 rounded-full text-xs  ${
+                                getStatus(product.status).color
+                            }`}>
+                            {getStatus(product.status).text}
+                        </span>
                     </td>
-                    <td className="border px-4 py-2 text-right w-52 ">
-                        <h6 className="line-clamp-2">{product.description}</h6>
+
+                    <td className="px-3 py-3  text-slate-500">
+                        {converterToJalali(product.created_at)}
                     </td>
-                    <td className="border px-4 py-2 text-right">
-                        {product.product_type}
-                    </td>
-                    <td className="border px-4 py-2 text-right">
-                        {getStatus(product.status)}
-                    </td>
-                    <td className="border px-4 py-2 text-right">
-                        {converterToJalali(product.created_at)}{' '}
-                    </td>
-                    <td className="border px-4 py-2 text-right">
-                        <Link
-                            href={`/admin/product/edit/${product.id}`}
-                            className="bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-4 rounded ml-2">
-                            <i className="fa fa-edit"></i>
-                        </Link>
-                        <Link
-                            href={`/admin/product/gallery/${product.id}`}
-                            className="bg-green-500 hover:bg-green-700  text-white font-bold py-2 px-4 rounded ml-2">
-                            <i className="fa fa-photo"></i>
-                        </Link>
-                        <ConfirmAllert
-                            title="حذف محصول"
-                            helper={`ایا از حذف محصول ${product.title} مطمعن هستید`}
-                            onConfirm={() =>
-                                deleteProduct({ productId: product.id })
-                            }
-                        />
+
+                    <td className="px-3 py-3">
+                        <div className="flex items-center gap-1">
+                            <Link
+                                href={`/admin/product/edit/${product.id}`}
+                                className="icon-btn  hover:text-blue-600 hover:bg-blue-50">
+                                <i className="fa-solid fa-pen " />
+                            </Link>
+
+                            <Link
+                                href={`/admin/product/gallery/${product.id}`}
+                                className="icon-btn hover:text-green-600 hover:bg-green-50">
+                                <i className="fa-solid fa-images " />
+                            </Link>
+                            <DiscountManager productId={product.id} />
+                            <DeleteProduct
+                                id={product.id}
+                                name={product.title}
+                            />
+                        </div>
                     </td>
                 </tr>
             ))}

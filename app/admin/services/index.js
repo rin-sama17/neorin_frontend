@@ -58,32 +58,6 @@ export async function getSlider(id) {
     return res.json()
 }
 
-export async function getState(id) {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/state/${id}`,
-        options,
-    )
-
-    if (!res.ok) {
-        throw new Error('خطا در دریافت محل')
-    }
-
-    return res.json()
-}
-
-export async function getStates() {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/state`,
-        options,
-    )
-
-    if (!res.ok) {
-        throw new Error('خطا در دریافت محل ها')
-    }
-
-    return res.json()
-}
-
 export async function getAttribute(id) {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/category-attribute/${id}`,
@@ -211,6 +185,80 @@ export async function getProduct(id) {
     return res.json()
 }
 
+export async function getFabrics() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/fabrics`,
+        options,
+    )
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت پارچه ها')
+    }
+
+    return res.json()
+}
+
+export async function getFabric(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/fabrics/${id}`,
+        options,
+    )
+    if (!res.ok) {
+        throw new Error('خطا در دریافت پارچه')
+    }
+
+    return res.json()
+}
+
+export async function getColors() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/colors`,
+        options,
+    )
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت رنگ ها')
+    }
+
+    return res.json()
+}
+
+export async function getColor(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/colors/${id}`,
+        options,
+    )
+    if (!res.ok) {
+        throw new Error('خطا در دریافت رنگ')
+    }
+
+    return res.json()
+}
+
+export async function getDiscounts() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/discounts`,
+        options,
+    )
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت تخفیف ها')
+    }
+
+    return res.json()
+}
+
+export async function getDiscount(id) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/product/discounts/${id}`,
+        options,
+    )
+    if (!res.ok) {
+        throw new Error('خطا در دریافت تخفیف')
+    }
+
+    return res.json()
+}
 export async function getCities() {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cities`,

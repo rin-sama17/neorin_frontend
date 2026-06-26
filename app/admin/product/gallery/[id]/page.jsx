@@ -1,22 +1,31 @@
 import GalleryUploader from './GalleryUploader'
-import LinkButton from '@/components/navigation/LinkButton'
+import Link from 'next/link'
 import { getProduct } from '@/admin/services'
 
 const page = async ({ params }) => {
     const { id } = params
     const product = await getProduct(id)
+    const data = product.data
 
     return (
-        <div className="w-full ">
-            <h2 className="text-xl mt-2 mr-2">مدیریت گالری</h2>
-            <h2 className="text-lg text-gray-400 mt-2 mr-2">
-                نام محصول : {product.data.title}
-            </h2>
-            <LinkButton
-                title="رفتن به صفحه ویرایش محصول"
-                href={`/admin/product/edit/${product.data.id}`}
-            />
-            <GalleryUploader product={product.data} />
+        <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+                <div>
+                    <h1 className="text-[15px] font-medium text-text-primary">
+                        مدیریت گالری
+                    </h1>
+                    <p className="text-[13px] text-text-muted mt-0.5">
+                        {data.title}
+                    </p>
+                </div>
+                <Link
+                    href={`/admin/product/edit/${data.id}`}
+                    className=" btn btn-primary">
+                    ویرایش محصول
+                </Link>
+            </div>
+
+            <GalleryUploader product={data} />
         </div>
     )
 }

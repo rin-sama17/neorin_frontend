@@ -5,33 +5,56 @@ import Input from '@/common/inputs/Input'
 import InputError from '@/common/inputs/InputError'
 import Link from 'next/link'
 import LinkButton from '@/components/navigation/LinkButton'
+
+import SelectDropdown from '@/common/inputs/Selector'
 import { useProductRequest } from '@/hooks/admin/useProductRequest'
 import { convertToForm } from '@/utility'
 import ImageUploader from '@/common/image/ImageUploader'
 import PriceInput from '@/common/inputs/PriceInput'
+{
+    /* <div className="mb-2">
+    <LinkButton
+        title={
+            <>
+                <i className="fa fa-photo ml-1"></i>
+                رفتن به صفحه مدیریت گالری
+            </>
+        }
+        href={`/admin/product/gallery/${product.id}`}
+        className="text-gray-500 text-lg "
+    />
+</div> */
+}
 
-const UpdateProductForm = ({ categories, cities, product }) => {
+const UpdateProductForm = ({
+    categories,
+    cities,
+    colors,
+    fabrics,
+    product,
+}) => {
+    console.log(product)
     const { updateProduct } = useProductRequest()
-
+    const PUBLIC_URL = 'http://neorin.ir'
     return (
         <Formik
             initialValues={{
                 title: product.title,
                 description: product.description,
-                product_type: product.product_type,
-                product_status: product.product_status,
-                category_id: product.category.id,
-                city_id: product.city.id,
-                contact: product.contact,
-                is_special: product.is_special,
-                is_ladder: product.is_ladder,
-                image: product.image,
-                tags: product.tags,
+                material: product.material,
                 price: product.price,
-                lat: product.lat,
-                lng: product.lng,
-                willing_to_trade: product.willing_to_trade,
+                category_id: product.category?.id ?? '',
+                color_ids: product.colors?.map(c => c.id) ?? [],
+                fabric_ids: product.fabrics?.map(f => f.id) ?? [],
+                sizes: product.sizes?.map(s => s.id) ?? [],
+                is_special: product.is_special,
                 status: product.status,
+                meta_title: product.seo?.meta_title ?? '', // 👈 nested
+                meta_description: product.seo?.meta_description ?? '', // 👈 nested
+                city_id: product.city?.id ?? '',
+                image: product.image ?? null,
+                tags: product.tags ?? [],
+                stock: product.stock ?? null,
             }}
             onSubmit={async (values, { setErrors }) => {
                 const data = convertToForm(values)
@@ -42,198 +65,164 @@ const UpdateProductForm = ({ categories, cities, product }) => {
                 })
             }}>
             {({ setFieldValue, values, handleChange }) => (
-                <Form className="gap-4 p-3 grid lg:grid-cols-3">
-                    <div className="col-span-3">
-                        <div className="mb-2">
-                            <LinkButton
-                                title={
-                                    <>
-                                        <i className="fa fa-photo ml-1"></i>
-                                        رفتن به صفحه مدیریت گالری
-                                    </>
-                                }
-                                href={`/admin/product/gallery/${product.id}`}
-                                className="text-gray-500 text-lg "
-                            />
-                        </div>
-                        <Label htmlFor="title">نام *</Label>
-                        <Input
-                            type="text"
-                            name="title"
-                            placeholder="نام محصول"
-                        />
-                        <p className="mt-2 text-sm text-gray-500 mr-2">
-                            بین 2 تا 120 کاراکتر
-                        </p>
-                        <InputError name="title" />
+                <Form className="bg-white rounded-xl  p-6">
+                    <div className="mb-6">
+                        <h2 className="text-lg font-semibold">ویرایش محصول</h2>
                     </div>
-                    <div className="col-span-3">
-                        <Label htmlFor="description">توضیحات</Label>
-                        <Input
-                            as="textarea"
-                            type="text"
-                            name="description"
-                            placeholder="توضیحات محصول"
-                        />
-                        <p className="mt-2 text-sm text-gray-500 mr-2">
-                            بین 2 تا 500 کاراکتر
-                        </p>
-
-                        <InputError name="description" />
-                    </div>
-                    <div className="col-span-3">
+                    <div className="container mb-6">
                         <ImageUploader
                             value={values.image}
                             name="image"
                             setFieldValue={setFieldValue}
                         />
                     </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="price">قیمت</Label>
-                        <PriceInput
-                            setFieldValue={setFieldValue}
-                            name="price"
-                            value={values}
-                        />
-                        <InputError name="price" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="product_type">نوع محصول</Label>
-                        <Input type="text" name="product_type" />
-                        <p className="mt-2 text-sm text-gray-500 mr-2">
-                            برای مثال: بازی
-                        </p>
-                        <InputError name="product_type" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="product_status">وضعیت محصول *</Label>
-                        <Input
-                            type="text"
-                            name="product_status"
-                            as="select"
-                            className="pr-9">
-                            <option value={'در حد نو'}>در حد نو</option>
-                            <option value={'کارکرده'}>کارکرده</option>
-                        </Input>
-                        <InputError name="product_status" />
-                    </div>
-                    <div className="col-span-3">
-                        <Label htmlFor="tags">برچسب ها</Label>
-                        <Input
-                            as="textarea"
-                            type="text"
-                            name="tags"
-                            placeholder="برچسب های محصول"
-                        />
-                        <p className="mt-2 text-sm text-gray-500 mr-2">
-                            با / از هم جدا کنید
-                        </p>
+                    <div className="grid lg:grid-cols-3 gap-4">
+                        <div>
+                            <Label>نام محصول</Label>
+                            <Input name="title" placeholder="ست روتختی آرام" />
+                        </div>
 
-                        <InputError name="tags" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="status">وضعیت</Label>
-                        <Input
-                            type="text"
-                            name="status"
-                            as="select"
-                            className="pr-9">
-                            <option value={1}>فعال</option>
-                            <option value={0}>غیرفعال</option>
-                        </Input>
-                        <InputError name="status" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="is_special">ویژه</Label>
-                        <Input
-                            type="text"
-                            name="is_special"
-                            as="select"
-                            className="pr-9">
-                            <option value={0}>غیرفعال</option>
-                            <option value={1}>فعال</option>
-                        </Input>
-                        <InputError name="is_special" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="is_ladder">نردبان</Label>
-                        <Input
-                            type="text"
-                            name="is_ladder"
-                            as="select"
-                            className="pr-9">
-                            <option value={0}>غیرفعال</option>
-                            <option value={1}>فعال</option>
-                        </Input>
-                        <InputError name="is_ladder" />
-                    </div>
-
-                    <div className="col-span-3">
-                        <Label htmlFor="contact">ارتباط</Label>
-                        <Input
-                            type="text"
-                            name="contact"
-                            as="textarea"
-                            placeholder="راه های ارتباطی شما"
-                        />
-
-                        <InputError name="contact" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="willing_to_trade">مایل به معاوضه</Label>
-                        <Input
-                            type="text"
-                            name="willing_to_trade"
-                            as="select"
-                            className="pr-9">
-                            <option value={1}>فعال</option>
-                            <option value={0}>غیرفعال</option>
-                        </Input>
-                        <InputError name="willing_to_trade" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="city_id">شهر *</Label>
-                        <Input
-                            type="text"
-                            name="city_id"
-                            className="pr-9"
-                            as="select">
-                            <option value="">---انتخاب کنید---</option>
-
-                            {cities?.data.map(city => (
-                                <option key={city.id} value={city.id}>
-                                    {city.name}
-                                </option>
-                            ))}
-                        </Input>
-                        <InputError name="city_id" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="category_id">دسته بندی *</Label>
-                        <Input
-                            type="text"
+                        <div>
+                            <Label>قیمت</Label>
+                            <PriceInput
+                                value={values}
+                                name="price"
+                                setFieldValue={setFieldValue}
+                            />
+                        </div>
+                        <SelectDropdown
+                            label="دسته بندی"
                             name="category_id"
-                            className="pr-9"
-                            as="select">
-                            <option value="">---انتخاب کنید---</option>
+                            options={categories.data}
+                            placeholder="انتخاب دسته"
+                        />
 
-                            {categories?.data.map(category => (
-                                <option key={category.id} value={category.id}>
-                                    {category.name}
-                                </option>
-                            ))}
-                        </Input>
-                        <InputError name="category_id" />
-                    </div>
-                    <div className="flex">
-                        <button className="btn btn-primary mr-4" type="submit">
-                            بروزرسانی محصول
-                        </button>
-                        <Link
-                            href="/admin/product"
-                            className="btn btn-secondary mr-4">
-                            انصراف
-                        </Link>
+                        <div className="mt-4 col-span-3">
+                            <Label>توضیحات</Label>
+
+                            <Input
+                                as="textarea"
+                                rows={5}
+                                name="description"
+                                placeholder="توضیحات محصول"
+                            />
+                        </div>
+                        <div>
+                            <Label>موجودی</Label>
+                            <Input
+                                name="stock"
+                                type="number"
+                                placeholder="۱۰ عدد"
+                            />
+                        </div>
+                        <div className="col-span-2">
+                            <Label>تگ ها</Label>
+                            <Input name="tags" placeholder="با / جدا کنید" />
+                        </div>
+
+                        <div>
+                            <Label>جنس پارچه</Label>
+
+                            <Input name="material" placeholder="پنبه" />
+                        </div>
+
+                        <SelectDropdown
+                            name="status"
+                            label="وضعیت"
+                            options={[
+                                { id: 1, name: 'فعال' },
+                                { id: 0, name: 'غیرفعال' },
+                            ]}
+                        />
+
+                        <SelectDropdown
+                            name="is_special"
+                            label="محصول ویژه"
+                            options={[
+                                { id: 1, name: 'بله' },
+                                { id: 0, name: 'خیر' },
+                            ]}
+                        />
+
+                        <SelectDropdown
+                            label="رنگ ها"
+                            name="color_ids"
+                            options={colors.data}
+                            placeholder="انتخاب رنگ"
+                            multiple
+                            showColor
+                        />
+                        <SelectDropdown
+                            label="پارچه ها"
+                            name="fabric_ids"
+                            options={fabrics.data}
+                            placeholder="انتخاب پارچه"
+                            multiple
+                            max={2}
+                        />
+                        <SelectDropdown
+                            label="کشور سازنده"
+                            name="city_id"
+                            options={cities.data}
+                            placeholder="انتخاب کشور"
+                        />
+
+                        <div className="col-span-2">
+                            <Label>عنوان سئو</Label>
+
+                            <Input
+                                name="meta_title"
+                                placeholder="مثال: خرید ست روتختی هتلی دونفره"
+                            />
+
+                            <div className="mt-1 flex justify-between text-xs text-slate-500">
+                                <span>پیشنهاد: 50 تا 60 کاراکتر</span>
+                                <span>{values.meta_title?.length || 0}/60</span>
+                            </div>
+
+                            <Label>توضیحات سئو</Label>
+
+                            <Input
+                                as="textarea"
+                                rows={4}
+                                name="meta_description"
+                                placeholder="توضیح کوتاهی برای نمایش در نتایج گوگل بنویسید."
+                            />
+
+                            <div className="mt-1 flex justify-between text-xs text-slate-500">
+                                <span>پیشنهاد: 120 تا 160 کاراکتر</span>
+                                <span>
+                                    {values.meta_description?.length || 0}/160
+                                </span>
+                            </div>
+                        </div>
+                        <div className="mt-4  rounded-lg  ring-2 ring-gray-300 p-4 bg-slate-50">
+                            <p className="text-blue-600 text-lg line-clamp-1">
+                                {values.meta_title || 'عنوان صفحه'}
+                            </p>
+
+                            <p className="text-green-700 text-xs mt-1">
+                                {PUBLIC_URL}/product
+                            </p>
+
+                            <p className="text-sm text-slate-600 mt-2 line-clamp-2">
+                                {values.meta_description ||
+                                    'توضیحات صفحه در نتایج گوگل نمایش داده می‌شود.'}
+                            </p>
+                        </div>
+                        <div className="mt-6 border-t pt-4 flex justify-end gap-2 col-span-3">
+                            <Link
+                                href="/admin/product"
+                                className="px-4 h-9 border rounded-md flex items-center">
+                                انصراف
+                            </Link>
+
+                            <button
+                                type="submit"
+                                className="px-4 h-9 rounded-md bg-primary text-white">
+                                ذخیره
+                            </button>
+                        </div>
                     </div>
                 </Form>
             )}

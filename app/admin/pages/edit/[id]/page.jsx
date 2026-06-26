@@ -7,7 +7,6 @@ const page = async ({ params }) => {
 
     return (
         <div className="w-full ">
-            <h2 className="text-xl mt-2 mr-2">ویرایش صفحه</h2>
             <UpdatePageForm page={page.data} />
         </div>
     )

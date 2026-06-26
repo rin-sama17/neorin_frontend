@@ -2,9 +2,9 @@
 import { Form, Formik } from 'formik'
 import Label from '@/common/inputs/Label'
 import Input from '@/common/inputs/Input'
-import InputError from '@/common/inputs/InputError'
 import Link from 'next/link'
 import { usePageRequest } from '@/hooks/admin/usePageRequest'
+import SelectDropdown from '@/common/inputs/Selector'
 
 const UpdatePageForm = ({ page }) => {
     const { updatePage } = usePageRequest()
@@ -23,55 +23,50 @@ const UpdatePageForm = ({ page }) => {
                     setErrors,
                 })
             }}>
-            <Form className="gap-4 p-3 grid lg:grid-cols-2">
-                <div className="col-span-2">
-                    <Label htmlFor="title">نام *</Label>
-                    <Input type="text" name="title" placeholder="نام صفحه" />
-                    <p className="text-sm text-gray-500 mr-2">
-                        بین 2 تا 120 کاراکتر
-                    </p>
-                    <InputError name="title" />
-                </div>
+            {({ values }) => (
+                <Form className="bg-white rounded-xl p-6">
+                    <div className="mb-6">
+                        <h2 className="text-lg font-semibold">ویرایش صفحه</h2>
+                    </div>
 
-                <div className="col-span-2">
-                    <Label htmlFor="body">بدنه *</Label>
-                    <Input
-                        as="textarea"
-                        type="text"
-                        minLength={6}
-                        name="body"
-                        placeholder="بدنه صفحه"
-                    />
-                    <p className="text-sm text-gray-500 mr-2">
-                        کد html, css و...
-                    </p>
-                    <InputError name="body" />
-                </div>
+                    <div className="grid lg:grid-cols-3 gap-4">
+                        <div className="col-span-2">
+                            <Label>نام صفحه</Label>
+                            <Input name="title" placeholder="نام صفحه" />
+                        </div>
+                        <SelectDropdown
+                            name="status"
+                            label="وضعیت"
+                            options={[
+                                { id: 1, name: 'فعال' },
+                                { id: 0, name: 'غیرفعال' },
+                            ]}
+                        />
+                        <div className="col-span-3">
+                            <Label>بدنه</Label>
+                            <Input
+                                as="textarea"
+                                rows={5}
+                                name="body"
+                                placeholder="کد html, css و..."
+                            />
+                        </div>
 
-                <div className="col-span-3">
-                    <Label htmlFor="status">وضعیت</Label>
-                    <Input
-                        type="text"
-                        name="status"
-                        as="select"
-                        className="pr-9">
-                        <option value={1}>فعال</option>
-                        <option value={0}>غیرفعال</option>
-                    </Input>
-                    <InputError name="status" />
-                </div>
-
-                <div className="flex">
-                    <button className="btn btn-primary mr-4" type="submit">
-                        ساخت صفحه
-                    </button>
-                    <Link
-                        href="/admin/pages"
-                        className="btn btn-secondary mr-4">
-                        انصراف
-                    </Link>
-                </div>
-            </Form>
+                        <div className="mt-6 border-t pt-4 flex justify-end gap-2 col-span-3">
+                            <Link
+                                href="/admin/pages"
+                                className="px-4 h-9 border rounded-md flex items-center">
+                                انصراف
+                            </Link>
+                            <button
+                                type="submit"
+                                className="px-4 h-9 rounded-md bg-primary text-white">
+                                ذخیره
+                            </button>
+                        </div>
+                    </div>
+                </Form>
+            )}
         </Formik>
     )
 }

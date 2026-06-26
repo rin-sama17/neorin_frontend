@@ -1,14 +1,25 @@
 import CreateProductForm from './CreateProductForm'
-import { getCategories, getCities } from '@/admin/services'
+import {
+    getCategories,
+    getCities,
+    getColors,
+    getFabrics,
+} from '@/admin/services'
 
 const page = async () => {
     const categories = await getCategories()
     const cities = await getCities()
+    const fabrics = await getFabrics()
+    const colors = await getColors()
 
     return (
-        <div className="w-full ">
-            <h2 className="text-xl mt-2 mr-2">ساخت محصول جدید</h2>
-            <CreateProductForm categories={categories} cities={cities} />
+        <div>
+            <CreateProductForm
+                categories={categories}
+                cities={cities}
+                fabrics={fabrics}
+                colors={colors}
+            />
         </div>
     )
 }

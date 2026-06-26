@@ -1,21 +1,21 @@
 import axios from '@/lib/axios'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-
-export const useStateRequest = () => {
+export const useDiscountRequest = () => {
     const router = useRouter()
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
-    const createState = async ({ setErrors, ...props }) => {
+    const createDiscount = async ({ setErrors, ...props }) => {
         await csrf()
         setErrors(null)
         axios
-            .post('/api/admin/product/state', props)
+            .post('/api/admin/product/discounts', props)
             .then(res => {
                 if (res.status === 201) {
-                    toast.success(`محل با موفقیت ساخته شد`)
-                    router.push('/admin/state')
+                    toast.success(`دسته بندی با موفقیت ساخته شد`)
+                    router.push('/admin/discount')
+                    router.refresh()
                 }
             })
             .catch(error => {
@@ -25,14 +25,20 @@ export const useStateRequest = () => {
             })
     }
 
-    const updateState = async ({ setErrors, stateId, ...props }) => {
+    const updateDiscount = async ({
+        setErrors,
+
+        discountId,
+        ...props
+    }) => {
         await csrf()
         setErrors(null)
+
         const updatePromise = axios
-            .put(`/api/admin/product/state/${stateId}`, props)
+            .put(`/api/admin/product/discounts/${discountId}`, props)
             .then(res => {
                 if (res.status === 200) {
-                    router.push('/admin/state')
+                    router.push('/admin/discount')
                     router.refresh()
                     return
                 }
@@ -46,15 +52,15 @@ export const useStateRequest = () => {
             })
         toast.promise(updatePromise, {
             loading: 'در حال بروزرسانی...',
-            success: 'محل با موفقیت بروزرسانی شد',
+            success: 'دسته بندی با موفقیت بروزرسانی شد',
             error: 'خطا در انجام عملیات',
         })
     }
 
-    const deleteState = async ({ stateId }) => {
+    const deleteDiscount = async ({ id }) => {
         await csrf()
         const deletePromise = axios
-            .delete(`/api/admin/product/state/${stateId}`)
+            .delete(`/api/admin/product/discounts/${id}`)
             .then(res => {
                 if (res.status === 200) {
                     router.refresh()
@@ -76,8 +82,8 @@ export const useStateRequest = () => {
     }
 
     return {
-        createState,
-        updateState,
-        deleteState,
+        createDiscount,
+        updateDiscount,
+        deleteDiscount,
     }
 }

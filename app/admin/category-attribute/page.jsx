@@ -7,16 +7,17 @@ const page = async () => {
 
     return (
         <div className="w-full">
-            <div className="p-4">
-                <h1 className="text-xl mb-4">مدیریت نسبت ها</h1>
+            <div className="flex items-center justify-between mb-4">
+                <h1 className="text-lg font-semibold">مدیریت نسبت ها</h1>
                 <Link
                     href="/admin/category-attribute/create"
-                    className="btn btn-success">
-                    ساخت نسبت جدید
+                    className="btn btn-secondary">
+                    <i className="fa-solid fa-plus" />
+                    <span>نسبت جدید</span>
                 </Link>
-
-                <AttributeList attributes={attributes} />
             </div>
+
+            <AttributeList attributes={attributes} />
         </div>
     )
 }

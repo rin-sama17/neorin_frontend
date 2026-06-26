@@ -1,45 +1,56 @@
-'use client'
 import Link from 'next/link'
-import ConfirmAllert from '@/common/other/ConfirmAllert'
 import Table from '@/common/other/Table'
-import { usePageRequest } from '@/hooks/admin/usePageRequest'
 import { converterToJalali } from '@/utility'
+import DeletePage from './delete/DeletePage'
 
 const PageList = ({ pages }) => {
-    const { deletePage } = usePageRequest()
-
-    const handleDelete = async pageId => {
-        deletePage({ pageId })
+    const getStatus = status => {
+        if (status === 1)
+            return { text: 'فعال', color: 'bg-green-50 text-green-700' }
+        return { text: 'غیرفعال', color: 'bg-red-50 text-red-700' }
     }
+
     return (
-        <Table headers={['شناسه', 'نام', 'بدنه', 'وضعیت', 'تاریخ', 'عملیات']}>
+        <Table headers={['#', 'عنوان', 'بدنه', 'وضعیت', 'تاریخ', '']}>
             {pages.data.map(page => (
-                <tr className="hover:bg-gray-50" key={page.id}>
-                    <td className="border px-4 py-2 text-right">{page.id}</td>
-                    <td className="border px-4 py-2 text-right">
-                        {page.title}
+                <tr
+                    key={page.id}
+                    className="border-b hover:bg-slate-50 transition-colors">
+                    <td className="px-3 py-3 text-sm">{page.id}</td>
+
+                    <td className="px-3 py-3">
+                        <p className="font-medium text-sm">{page.title}</p>
                     </td>
 
-                    <td className="border px-4 py-2 text-right max-w-52">
-                        <h6 className="line-clamp-2"> {page.body}</h6>
+                    <td className="px-3 py-3 max-w-52">
+                        <p className="text-sm text-slate-500 line-clamp-2">
+                            {page.body}
+                        </p>
                     </td>
-                    <td className="border px-4 py-2 text-right">
-                        {page.status === 1 ? 'فعال' : 'غیرفعال'}
+
+                    <td className="px-3 py-3">
+                        <span
+                            className={`inline-flex px-2 py-1 rounded-full text-xs ${
+                                getStatus(page.status).color
+                            }`}>
+                            {getStatus(page.status).text}
+                        </span>
                     </td>
-                    <td className="border px-4 py-2 text-right">
-                        {converterToJalali(page.created_at)}{' '}
+
+                    <td className="px-3 py-3 text-slate-500">
+                        {converterToJalali(page.created_at)}
                     </td>
-                    <td className="border px-4 py-2 text-right">
-                        <Link
-                            href={`/admin/pages/edit/${page.id}`}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
-                            <i className="fa fa-edit"></i>
-                        </Link>
-                        <ConfirmAllert
-                            title="حذف صفحه"
-                            helper={`ایا از حذف صفحه ${page.title} مطمعن هستید`}
-                            onConfirm={() => handleDelete(page.id)}
-                        />
+
+                    <td className="px-3 py-3">
+                        <div className="flex items-center gap-1">
+                            <Link
+                                href={`/admin/pages/edit/${page.id}`}
+                                className="icon-btn hover:text-blue-600 hover:bg-blue-50">
+                                <i className="fa-solid fa-pen" />
+                            </Link>
+
+                            <DeletePage id={page.id} name={page.title} />
+                        </div>
                     </td>
                 </tr>
             ))}

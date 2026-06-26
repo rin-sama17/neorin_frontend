@@ -1,58 +1,66 @@
-'use client'
 import Link from 'next/link'
-import ConfirmAllert from '@/common/other/ConfirmAllert'
 import Table from '@/common/other/Table'
-import { useCategoryValueRequest } from '@/hooks/admin/useCategoryValueRequest'
 import { converterToJalali } from '@/utility'
+import DeleteAttributeValue from './delete/DeleteAttributeValue'
 
 const CategoryValueList = ({ categoryValues }) => {
-    const { deleteCategoryValue } = useCategoryValueRequest()
-
-    const handleDelete = async categoryValueId => {
-        deleteCategoryValue({ categoryValueId })
+    const getStatus = status => {
+        if (status === 1)
+            return { text: 'فعال', color: 'bg-green-50 text-green-700' }
+        return { text: 'غیرفعال', color: 'bg-red-50 text-red-700' }
     }
+
     return (
         <Table
             headers={[
-                'شناسه',
-                ' نسبت دسته بندی',
+                '#',
+                'نسبت دسته بندی',
                 'مقدار',
                 'نوع',
                 'وضعیت',
                 'تاریخ',
-                'عملیات',
+                '',
             ]}>
             {categoryValues.data.map(values => (
-                <tr className="hover:bg-gray-50" key={values.id}>
-                    <td className="border px-4 py-2 text-right">{values.id}</td>
-                    <td className="border px-4 py-2 text-right">
-                        {values.categoryAttribute?.name}
+                <tr
+                    key={values.id}
+                    className="border-b hover:bg-slate-50 transition-colors">
+                    <td className="px-3 py-3 text-sm">{values.id}</td>
+
+                    <td className="px-3 py-3">
+                        <p className="font-medium text-sm">
+                            {values.categoryAttribute?.name}
+                        </p>
                     </td>
-                    <td className="border px-4 py-2 text-right">
+
+                    <td className="px-3 py-3 text-sm text-slate-600">
                         {values.value}
                     </td>
 
-                    <td className="border px-4 py-2 text-right">
+                    <td className="px-3 py-3 text-sm text-slate-600">
                         {values.type === 1 ? 'متن' : 'انتخاب'}
                     </td>
 
-                    <td className="border px-4 py-2 text-right">
-                        {values.status === 1 ? 'فعال' : 'غیرفعال'}
+                    <td className="px-3 py-3">
+                        <span
+                            className={`inline-flex px-2 py-1 rounded-full text-xs ${getStatus(values.status).color}`}>
+                            {getStatus(values.status).text}
+                        </span>
                     </td>
-                    <td className="border px-4 py-2 text-right">
-                        {converterToJalali(values.created_at)}{' '}
+
+                    <td className="px-3 py-3 text-slate-500">
+                        {converterToJalali(values.created_at)}
                     </td>
-                    <td className="border px-4 py-2 text-right">
-                        <Link
-                            href={`/admin/category-value/edit/${values.id}`}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
-                            <i className="fa fa-edit"></i>
-                        </Link>
-                        <ConfirmAllert
-                            title="حذف مقدار"
-                            helper={`ایا از حذف مقدار مطمعن هستید`}
-                            onConfirm={() => handleDelete(values.id)}
-                        />
+
+                    <td className="px-3 py-3">
+                        <div className="flex items-center gap-1">
+                            <Link
+                                href={`/admin/category-value/edit/${values.id}`}
+                                className="icon-btn hover:text-blue-600 hover:bg-blue-50">
+                                <i className="fa-solid fa-pen" />
+                            </Link>
+                            <DeleteAttributeValue id={values.id} />
+                        </div>
                     </td>
                 </tr>
             ))}

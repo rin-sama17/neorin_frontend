@@ -1,64 +1,80 @@
 'use client'
-import { Form, Formik } from 'formik'
+import { Formik, Form } from 'formik'
 import Link from 'next/link'
-import Label from '@/common/inputs/Label'
 import InputError from '@/common/inputs/InputError'
 import GalleryManagement from './GalleryManagement'
 import { convertToForm } from '@/utility'
 import { useGalleryRequest } from '@/hooks/admin/useGalleryRequest'
 
 const GalleryUploader = ({ product }) => {
+    console.log(product)
     const { createGallery } = useGalleryRequest()
+
     return (
         <Formik
             initialValues={{
+                state: 1,
                 product_id: product.id,
                 images: product.gallery ?? [],
             }}
-            onSubmit={async (values, { setErrors }) => {
-                const data = convertToForm(values)
-                createGallery({
-                    data,
-                    setErrors,
-                })
-            }}>
-            {({ setFieldValue, values }) => (
-                <Form className="gap-4 p-3 grid lg:grid-cols-3">
-                    <div className="col-span-3">
-                        <Label htmlFor="images">عکس</Label>
-                        <input
-                            type="file"
-                            onChange={event => {
-                                const files = Array.from(
-                                    event.currentTarget.files,
-                                )
-                                setFieldValue('images', [
-                                    ...files,
-                                    ...values.images,
-                                ])
-                            }}
-                            name="images"
-                            className="w-full rounded-md shadow-sm  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-2 border-gray-300   file:ml-2 file:py-2 file:px-4 file:rounded-s-lg file:border-0 file:text-lg file:font-semibold file:bg-gray-600 file:text-white hover:file:bg-gray-700"
-                            id="images"
-                        />
-                        <InputError name="images" />
+            onSubmit={(values, { setErrors }) =>
+                createGallery({ data: convertToForm(values), setErrors })
+            }>
+            {({ values, setFieldValue }) => (
+                <Form className="flex flex-col gap-4">
+                    {/* Uploader */}
+                    <div className="border-2 border-dashed border-slate-200 rounded-xl p-4 hover:border-primary/40 transition-colors">
+                        <label className="flex flex-col items-center gap-2 cursor-pointer">
+                            <svg
+                                width="22"
+                                height="22"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="text-text-muted">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                            <span className="text-[13px] text-text-secondary">
+                                برای آپلود کلیک کنید
+                            </span>
+                            <input
+                                type="file"
+                                multiple
+                                className="hidden"
+                                onChange={e =>
+                                    setFieldValue('images', [
+                                        ...e.currentTarget.files,
+                                        ...values.images,
+                                    ])
+                                }
+                            />
+                        </label>
                     </div>
-                    <div className="flex">
-                        <button className="btn btn-primary mr-4" type="submit">
-                            ثبت تغییرات
-                        </button>
+
+                    <InputError name="images" />
+
+                    {/* Gallery list */}
+                    <GalleryManagement
+                        name="images"
+                        value={values.images}
+                        setFieldValue={setFieldValue}
+                    />
+
+                    {/* Footer */}
+                    <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
                         <Link
                             href="/admin/product"
-                            className="btn btn-secondary mr-4">
+                            className="px-4 h-9 border border-slate-300 rounded-lg text-[13px] text-text-secondary flex items-center hover:border-slate-400 transition-colors">
                             انصراف
                         </Link>
-                    </div>
-                    <div className="col-span-3">
-                        <GalleryManagement
-                            value={values.images}
-                            name="images"
-                            setFieldValue={setFieldValue}
-                        />
+                        <button type="submit" className="btn btn-primary">
+                            ثبت تغییرات
+                        </button>
                     </div>
                 </Form>
             )}

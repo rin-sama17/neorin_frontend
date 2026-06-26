@@ -29,6 +29,24 @@ export const useGalleryRequest = () => {
                 setErrors(error.response.data.errors)
             })
     }
+    const updateGallery = async ({ galleryId, ...props }) => {
+        await csrf()
+
+        const updatePromise = axios
+            .put(`/api/admin/product/gallery/${galleryId}`, props)
+            .then(() => {
+                router.refresh()
+            })
+            .catch(error => {
+                if (error.response.status !== 422) throw error
+                throw new Error()
+            })
+        toast.promise(updatePromise, {
+            loading: 'در حال بروزرسانی...',
+            success: 'با موفقیت بروزرسانی شد',
+            error: 'خطا در انجام عملیات',
+        })
+    }
 
     const deleteGallery = async ({ id, setState }) => {
         await csrf()
@@ -59,6 +77,7 @@ export const useGalleryRequest = () => {
 
     return {
         createGallery,
+        updateGallery,
         deleteGallery,
     }
 }

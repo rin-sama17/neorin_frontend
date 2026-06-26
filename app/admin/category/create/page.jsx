@@ -4,9 +4,9 @@ import { getCategories } from '@/admin/services'
 const page = async () => {
     const categories = await getCategories()
     return (
-        <div >
-    <CreateCategoryForm categories={categories} />
-</div>
+        <div>
+            <CreateCategoryForm categories={categories} />
+        </div>
     )
 }
 

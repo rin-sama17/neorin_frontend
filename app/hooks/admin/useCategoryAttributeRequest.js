@@ -51,10 +51,10 @@ export const useCategoryAttributeRequest = () => {
         })
     }
 
-    const deleteAttribute = async ({ attributeId }) => {
+    const deleteAttribute = async ({ id }) => {
         await csrf()
         const deletePromise = axios
-            .delete(`/api/admin/product/category-attribute/${attributeId}`)
+            .delete(`/api/admin/product/category-attribute/${id}`)
             .then(res => {
                 if (res.status === 200) {
                     router.refresh()

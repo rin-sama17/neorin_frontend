@@ -5,6 +5,7 @@ import Input from '@/common/inputs/Input'
 import InputError from '@/common/inputs/InputError'
 import Link from 'next/link'
 import { useCategoryRequest } from '@/hooks/admin/useCategoryRequest'
+import SelectDropdown from '@/common/inputs/Selector'
 
 const CreateCategoryForm = ({ categories }) => {
     const { createCategory } = useCategoryRequest()
@@ -29,111 +30,69 @@ const CreateCategoryForm = ({ categories }) => {
                     setErrors,
                 })
             }}>
-        <Form className="bg-white rounded-xl ">
+            {({ values }) => (
+                <Form className="bg-white rounded-xl p-6">
+                    <div className="mb-6">
+                        <h2 className="text-lg font-semibold">
+                            ساخت دسته بندی جدید
+                        </h2>
+                    </div>
 
-    <div className="mb-6">
-        <h2 className="text-lg font-semibold">
-            ساخت دسته بندی جدید
-        </h2>
+                    <div className="grid lg:grid-cols-3 gap-4">
+                        <div className="lg:col-span-2">
+                            <Label>نام دسته</Label>
+                            <Input name="name" placeholder="مثال: پارچه مبلی" />
+                        </div>
 
-        <p className="text-sm text-slate-500 mt-1">
-            اطلاعات دسته بندی را وارد کنید.
-        </p>
-    </div>
+                        <div>
+                            <Label>آیکون</Label>
+                            <Input name="icon" placeholder="fa-box" />
+                        </div>
 
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div className="col-span-3">
+                            <Label>توضیحات</Label>
+                            <Input
+                                as="textarea"
+                                rows={4}
+                                name="description"
+                                placeholder="توضیحات دسته بندی"
+                            />
+                        </div>
 
-        <div className="lg:col-span-2">
-            <Label htmlFor="name">نام دسته</Label>
-            <Input
-                name="name"
-                placeholder="مثال: پارچه مبلی"
-                className="w-full"
-            />
-            <InputError name="name" />
-        </div>
+                        <SelectDropdown
+                            label="دسته والد"
+                            name="parent_id"
+                            options={[
+                                { id: '', name: 'دسته اصلی' },
+                                ...(categories?.data || []),
+                            ]}
+                            placeholder="دسته اصلی"
+                        />
 
-        <div>
-            <Label htmlFor="icon">آیکون</Label>
-            <Input
-                name="icon"
-                placeholder="fa-box"
-                className="w-full"
-            />
-            <InputError name="icon" />
-        </div>
+                        <SelectDropdown
+                            name="status"
+                            label="وضعیت"
+                            options={[
+                                { id: 1, name: 'فعال' },
+                                { id: 0, name: 'غیرفعال' },
+                            ]}
+                        />
 
-        <div className="lg:col-span-3">
-            <Label htmlFor="description">توضیحات</Label>
-            <Input
-                as="textarea"
-                rows={4}
-                name="description"
-                className="w-full"
-                placeholder="توضیحات دسته بندی"
-            />
-            <InputError name="description" />
-        </div>
-
-        <div>
-            <Label htmlFor="parent_id">دسته والد</Label>
-
-            <Input
-                as="select"
-                name="parent_id"
-                className="w-full px-3"
-            >
-                <option value="">
-                    دسته اصلی
-                </option>
-
-                {categories?.data.map(category => (
-                    <option
-                        key={category.id}
-                        value={category.id}
-                    >
-                        {category.name}
-                    </option>
-                ))}
-            </Input>
-
-            <InputError name="parent_id" />
-        </div>
-
-        <div>
-            <Label htmlFor="status">وضعیت</Label>
-
-            <Input
-                as="select"
-                name="status"
-                className="w-full px-3"
-            >
-                <option value={1}>فعال</option>
-                <option value={0}>غیرفعال</option>
-            </Input>
-
-            <InputError name="status" />
-        </div>
-
-    </div>
-
-    <div className="flex justify-end gap-2 mt-6 pt-4 border-t">
-        <Link
-            href="/admin/category"
-            className="h-9 px-4 flex items-center rounded-md border border-slate-200 text-sm hover:bg-slate-50"
-        >
-            انصراف
-        </Link>
-
-        <button
-            type="submit"
-            className="h-9 px-4 rounded-md bg-primary text-white text-sm"
-        >
-            ذخیره
-        </button>
-    </div>
-
-</Form>
+                        <div className="mt-6 border-t pt-4 flex justify-end gap-2 col-span-3">
+                            <Link
+                                href="/admin/category"
+                                className="px-4 h-9 border rounded-md flex items-center">
+                                انصراف
+                            </Link>
+                            <button
+                                type="submit"
+                                className="px-4 h-9 rounded-md bg-primary text-white">
+                                ذخیره
+                            </button>
+                        </div>
+                    </div>
+                </Form>
+            )}
         </Formik>
     )
 }

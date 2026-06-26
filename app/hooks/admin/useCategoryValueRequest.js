@@ -55,10 +55,10 @@ export const useCategoryValueRequest = () => {
         })
     }
 
-    const deleteCategoryValue = async ({ categoryValueId }) => {
+    const deleteCategoryValue = async ({ id }) => {
         await csrf()
         const deletePromise = axios
-            .delete(`/api/admin/product/category-value/${categoryValueId}`)
+            .delete(`/api/admin/product/category-value/${id}`)
             .then(res => {
                 if (res.status === 200) {
                     router.refresh()

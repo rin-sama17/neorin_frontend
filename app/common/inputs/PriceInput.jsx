@@ -7,7 +7,7 @@ const PriceInput = ({ name, setFieldValue, value }) => {
             thousandSeparator=","
             customInput="input"
             value={value[name]}
-            onValueChange={val => setFieldValue(name, val.formattedValue)}
+            onValueChange={val => setFieldValue(name, val.value)}
             name={name}
             placeholder="تومان"
             className="input"

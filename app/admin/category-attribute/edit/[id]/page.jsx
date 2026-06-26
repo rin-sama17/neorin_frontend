@@ -9,7 +9,6 @@ const page = async ({ params }) => {
 
     return (
         <div className="w-full ">
-            <h2 className="text-xl mt-2 mr-2">ویرایش نسبت</h2>
             <UpdateAttributeForm
                 categories={categories}
                 attribute={attribute.data}

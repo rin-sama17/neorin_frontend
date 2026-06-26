@@ -2,11 +2,11 @@
 import { Form, Formik } from 'formik'
 import Label from '@/common/inputs/Label'
 import Input from '@/common/inputs/Input'
-import InputError from '@/common/inputs/InputError'
 import Link from 'next/link'
 import { useSliderRequest } from '@/hooks/admin/useSliderRequest'
 import { convertToForm } from '@/utility'
 import ImageUploader from '@/common/image/ImageUploader'
+import SelectDropdown from '@/common/inputs/Selector'
 
 const CreateSliderForm = () => {
     const { createSlider } = useSliderRequest()
@@ -31,15 +31,17 @@ const CreateSliderForm = () => {
                 } else {
                     data = values
                 }
-                const form = convertToForm(data)
-                createSlider({
-                    data: form,
-                    setErrors,
-                })
+                createSlider({ data: convertToForm(data), setErrors })
             }}>
             {({ values, setFieldValue }) => (
-                <Form className="gap-4 p-3 grid lg:grid-cols-2">
-                    <div className="col-span-2">
+                <Form className="bg-white rounded-xl p-6">
+                    <div className="mb-6">
+                        <h2 className="text-lg font-semibold">
+                            ساخت اسلایدر جدید
+                        </h2>
+                    </div>
+
+                    <div className="container mb-6">
                         <ImageUploader
                             value={values.image}
                             name="image"
@@ -47,83 +49,69 @@ const CreateSliderForm = () => {
                             setFieldValue={setFieldValue}
                         />
                     </div>
-                    <div className="col-span-2">
-                        <Label htmlFor="type">نوع</Label>
-                        <Input
-                            type="text"
+
+                    <div className="grid lg:grid-cols-3 gap-4">
+                        <SelectDropdown
                             name="type"
-                            as="select"
-                            className="pr-9">
-                            <option value={1}>کپشن دار</option>
-                            <option value={0}>عکس</option>
-                        </Input>
-                        <InputError name="type" />
-                    </div>
-
-                    {values.type == 1 && (
-                        <>
-                            <div className="col-span-2">
-                                <Label htmlFor="title">عنوان *</Label>
-                                <Input
-                                    type="text"
-                                    name="title"
-                                    placeholder="عنوان اسلایدر"
-                                />
-                                <p className="text-sm text-gray-500 mr-2">
-                                    بین 2 تا 120 کاراکتر
-                                </p>
-                                <InputError name="title" />
-                            </div>
-
-                            <div className="col-span-2">
-                                <Label htmlFor="description">توضیحات *</Label>
-                                <Input
-                                    as="textarea"
-                                    type="text"
-                                    minLength={6}
-                                    name="description"
-                                    placeholder="توضیحات اسلایدر"
-                                />
-
-                                <InputError name="description" />
-                            </div>
-                        </>
-                    )}
-                    <div className="col-span-1">
-                        <Label htmlFor="link">لینک *</Label>
-                        <Input
-                            type="text"
-                            name="link"
-                            placeholder="http://..."
-                            style={{ direction: 'ltr' }}
+                            label="نوع"
+                            options={[
+                                { id: 1, name: 'کپشن دار' },
+                                { id: 0, name: 'عکس' },
+                            ]}
                         />
-                        <p className="text-sm text-gray-500 mr-2">
-                            لینک اسلایدر
-                        </p>
-                        <InputError name="link" />
-                    </div>
-                    <div className="col-span-1">
-                        <Label htmlFor="status">وضعیت</Label>
-                        <Input
-                            type="text"
-                            name="status"
-                            as="select"
-                            className="pr-9">
-                            <option value={1}>فعال</option>
-                            <option value={0}>غیرفعال</option>
-                        </Input>
-                        <InputError name="status" />
-                    </div>
 
-                    <div className="flex">
-                        <button className="btn btn-primary mr-4" type="submit">
-                            ساخت اسلایدر
-                        </button>
-                        <Link
-                            href="/admin/slider"
-                            className="btn btn-secondary mr-4">
-                            انصراف
-                        </Link>
+                        {values.type == 1 && (
+                            <>
+                                <div className="col-span-2">
+                                    <Label>عنوان</Label>
+                                    <Input
+                                        name="title"
+                                        placeholder="عنوان اسلایدر"
+                                    />
+                                </div>
+
+                                <div className="col-span-3">
+                                    <Label>توضیحات</Label>
+                                    <Input
+                                        as="textarea"
+                                        rows={4}
+                                        name="description"
+                                        placeholder="توضیحات اسلایدر"
+                                    />
+                                </div>
+                            </>
+                        )}
+
+                        <div>
+                            <Label>لینک</Label>
+                            <Input
+                                name="link"
+                                placeholder="http://..."
+                                style={{ direction: 'ltr' }}
+                            />
+                        </div>
+
+                        <SelectDropdown
+                            name="status"
+                            label="وضعیت"
+                            options={[
+                                { id: 1, name: 'فعال' },
+                                { id: 0, name: 'غیرفعال' },
+                            ]}
+                        />
+
+                        <div className="mt-6 border-t pt-4 flex justify-end gap-2 col-span-3">
+                            <Link
+                                href="/admin/slider"
+                                className="px-4 h-9 border rounded-md flex items-center">
+                                انصراف
+                            </Link>
+                            <button
+                                type="submit"
+                                className="px-4 h-9 rounded-md bg-primary text-white">
+                                ذخیره
+                            </button>
+                        </div>
                     </div>
                 </Form>
             )}
